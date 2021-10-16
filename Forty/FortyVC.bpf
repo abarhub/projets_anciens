@@ -1,0 +1,12 @@
+USEUNIT(".\canvas.cpp");
+USEUNIT(".\card.cpp");
+USEUNIT(".\forty.cpp");
+USEUNIT(".\game.cpp");
+USEUNIT(".\pile.cpp");
+USEUNIT(".\playerdg.cpp");
+USEUNIT(".\scoredg.cpp");
+USEUNIT(".\scorefil.cpp");
+USERC(".\forty.rc");
+USEFILE("vctobpr.log");
+
+#define WinMain

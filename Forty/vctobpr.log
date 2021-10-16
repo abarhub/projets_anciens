@@ -1,0 +1,21 @@
+Lecture des configurations depuis D:\Alain\Projets\Forty\FortyVC.dsp
+Lecture des configurations depuis D:\Alain\Projets\Forty\FortyVC.dsp terminée
+ Conversion de D:\Alain\Projets\Forty\FortyVC.dsp
+Utilisation de la configuration "FortyVC - Win32 Debug"
+Avertissement : option compilateur inconnue passée : /Yu
+Avertissement : option compilateur inconnue passée : /Yu
+Avertissement : option compilateur inconnue passée : /Yu
+Avertissement : option compilateur inconnue passée : /Yu
+Avertissement : option compilateur inconnue passée : /Yu
+Avertissement : option compilateur inconnue passée : /Yu
+Avertissement : option compilateur inconnue passée : /Yu
+Avertissement : option compilateur inconnue passée : /Yu
+Avertissement : option compilateur inconnue passée : /Yu
+Avertissement : aucune conversion pour l'option compilateur : /Gm
+Avertissement : aucune conversion pour l'option compilateur : /FD
+Avertissement : aucune conversion pour l'option lieur : /NODEFAULTLIB:"LIBCD.LIB"
+Avertissement : aucune conversion pour l'option lieur : /NODEFAULTLIB:"LIBCID.LIB"
+Avertissement : aucune conversion pour l'option lieur : /NODEFAULTLIB:"MSVCRT.LIB"
+Avertissement : aucune conversion pour l'option lieur : /OUT:"DEBUG/FORTY.EXE"
+Avertissement : aucune conversion pour l'option lieur : /PDBTYPE:SEPT
+Création de FortyVC.bpr
