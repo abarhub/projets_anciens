@@ -1,0 +1,194 @@
+Projet de logique
+Licence d'informatique
+
+Auteurs (Tp3):
+Aubanel Vincent
+Barret Alain
+
+************  Explications du programme  *****************
+
+Ce programme est compose de 2 fichiers:
+demonstrateur.c et debugage.h
+Le 1er contient tout le code, et le 2eme contient
+des macro pour faciliter le debugage
+(programmation defensive).
+
+Le programme ce compile par :
+gcc -o demonstrateur demonstrateur.c
+
+et on le test par :
+demonstrateur nom_de_fichier
+
+Le programme est en 2 parties:
+ - une partie analyse le fichier et
+   remplit les 2 tableau BOOL et CLAUSES
+
+ - l'autre partie calcul la consistance
+   en utilisant l'algorithme de quine derecursive
+
+
+***************  Les tests  *******************
+
+24 fichiers on ete analyses.
+4 n'ont pas pu terminer car il ont dure plus de 7 heures.
+Ils sont tries par ordre croissant.
+
+Essai1 :
+Il y a 4 booleens differents et 6 clauses non vides
+ensemble inconsistant
+Il y a eut 0 modeles en 8 etapes
+**********************
+
+Essai2 :
+Il y a 3 booleens differents et 4 clauses non vides
+ensemble consistant
+Il y a eut 1 modeles en 3 etapes
+La consistance a duree 0.00 secondes
+***********************
+
+Moteur :
+on a lu 16 booleens differents et 30 clauses non vides
+ensemble consistant
+Il y a eut 32 modeles en 11 etapes
+La consistance a duree 0.00 secondes
+***********************
+
+Moteur_quest1 :
+on a lu 16 booleens differents et 35 clauses non vides
+ensemble inconsistant
+Il y a eut 0 modeles en 9 etapes
+La consistance a duree 0.00 secondes
+***********************
+
+Moteur_quest2 :
+on a lu 16 booleens differents et 36 clauses non vides
+ensemble inconsistant
+Il y a eut 0 modeles en 11 etapes
+La consistance a duree 0.00 secondes
+***********************
+
+Ramsey_2c_5pts :
+on a lu 10 booleens differents et 20 clauses non vides
+ensemble consistant
+Il y a eut 12 modeles en 13 etapes
+La consistance a duree 0.00 secondes
+***********************
+
+Ramsey_2c_6pts :
+on a lu 15 booleens differents et 40 clauses non vides
+ensemble inconsistant
+Il y a eut 0 modeles en 181 etapes
+La consistance a duree 0.01 secondes
+***********************
+
+Circuit :
+on a lu 65 booleens differents et 129 clauses non vides
+ensemble consistant
+Il y a eut 65536 modeles en 65 etapes
+La consistance a duree 2.20 secondes
+***********************
+
+Reines5
+on a lu 50 booleens differents et 190 clauses non vides
+ensemble consistant
+Il y a eut 10 modeles en 50 etapes
+La consistance a duree 0.01 secondes
+***********************
+
+Reines5_quest :
+on a lu 50 booleens differents et 215 clauses non vides
+ensemble inconsistant
+Il y a eut 0 modeles en 302 etapes
+La consistance a duree 0.00 secondes
+***********************
+
+Reines6 :
+on a lu 72 booleens differents et 332 clauses non vides
+ensemble consistant
+Il y a eut 4 modeles en 309 etapes
+La consistance a duree 0.01 secondes
+***********************
+
+Reines6_quest2 :
+on a lu 72 booleens differents et 333 clauses non vides
+ensemble inconsistant
+Il y a eut 0 modeles en 1234 etapes
+La consistance a duree 0.01 secondes
+***********************
+
+Reines6_quest1 :
+on a lu 72 booleens differents et 368 clauses non vides
+ensemble consistant
+Il y a eut 4 modeles en 212 etapes
+La consistance a duree 0.01 secondes
+***********************
+
+Reines8 :
+on a lu 128 booleens differents et 800 clauses non vides
+ensemble consistant
+Il y a eut 92 modeles en 901 etapes
+La consistance a duree 0.24 secondes
+***********************
+
+Circuit_quest :
+on a lu 73 booleens differents et 386 clauses non vides
+ensemble inconsistant
+Il y a eut 0 modeles en 22256 etapes
+La consistance a duree 0.25 secondes
+***********************
+
+Sendmory :
+on a lu 164 booleens differents et 2492 clauses non vides
+ensemble consistant
+Il y a eut 1 modeles en 876 etapes
+La consistance a duree 0.07 secondes
+***********************
+
+Sendmory_quest :
+on a lu 164 booleens differents et 2493 clauses non vides
+ensemble inconsistant
+Il y a eut 0 modeles en 1089 etapes
+La consistance a duree 0.06 secondes
+***********************
+
+Ramsey_3c_16pts :
+Au bout d'une heure,
+le calcul de la consistance n'est pas fini
+***********************
+
+Schur_3b_13j :
+on a lu 420 booleens differents et 3782 clauses non vides
+le remplissage des sdd  a duré 0.15 secondes
+ensemble consistant
+Il y a eut 3 modeles en 1015 etapes
+La consistance a duree 0.17 secondes
+***********************
+
+Schur_3b_14j :
+on a lu 480 booleens differents et 4622 clauses non vides
+ensemble inconsistant
+Il y a eut 0 modeles en 2384 etapes
+La consistance a duree 0.25 secondes
+***********************
+
+Erdos_Szekeres9 :
+Au bout d'une heure,
+le calcul de la consistance n'est pas fini
+***********************
+
+Erdos_Szekeres10 :
+on a lu 1200 booleens differents et 4430 clauses non vides
+ensemble inconsistant
+Il y a eut 0 modeles en 210290 etapes
+La consistance a duree 25.94 secondes
+***********************
+
+Turan_5pts_6r :
+Au bout d'une heure,
+le calcul de la consistance n'est pas fini
+***********************
+
+Turan_5pts_7r :
+Au bout d'une heure,
+le calcul de la consistance n'est pas fini
+***********************

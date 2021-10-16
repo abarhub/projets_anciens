@@ -1,0 +1,192 @@
+.cshrc s execute2
+calcul des consistances
+***********************
+lecture du fichier "Essai1"...
+la lecture a duré 0.00 secondes
+remplissage des structures de donnée...
+on a lu 4 booleens differents et 6 clauses non vides
+le remplissage des sdd  a duré 0.00 secondes
+ensemble inconsistant
+Il y a eut 0 modeles en 8 etapes
+La consistance a duree 0.00 secondes
+***********************
+lecture du fichier "Essai2"...
+la lecture a duré 0.00 secondes
+remplissage des structures de donnée...
+on a lu 3 booleens differents et 4 clauses non vides
+le remplissage des sdd  a duré 0.00 secondes
+pas d'autre modele
+Il y a eut 1 modeles en 3 etapes
+La consistance a duree 0.00 secondes
+***********************
+lecture du fichier "Moteur"...
+la lecture a duré 0.00 secondes
+remplissage des structures de donnée...
+on a lu 16 booleens differents et 30 clauses non vides
+le remplissage des sdd  a duré 0.00 secondes
+pas d'autre modele
+Il y a eut 32 modeles en 11 etapes
+La consistance a duree 0.00 secondes
+***********************
+lecture du fichier "Moteur_quest1"...
+la lecture a duré 0.00 secondes
+remplissage des structures de donnée...
+on a lu 16 booleens differents et 35 clauses non vides
+le remplissage des sdd  a duré 0.00 secondes
+ensemble inconsistant
+Il y a eut 0 modeles en 9 etapes
+La consistance a duree 0.00 secondes
+***********************
+lecture du fichier "Moteur_quest2"...
+la lecture a duré 0.00 secondes
+remplissage des structures de donnée...
+on a lu 16 booleens differents et 36 clauses non vides
+le remplissage des sdd  a duré 0.00 secondes
+ensemble inconsistant
+Il y a eut 0 modeles en 11 etapes
+La consistance a duree 0.00 secondes
+***********************
+lecture du fichier "Ramsey_2c_5pts"...
+la lecture a duré 0.00 secondes
+remplissage des structures de donnée...
+on a lu 10 booleens differents et 20 clauses non vides
+le remplissage des sdd  a duré 0.00 secondes
+pas d'autre modele
+Il y a eut 12 modeles en 13 etapes
+La consistance a duree 0.00 secondes
+***********************
+lecture du fichier "Ramsey_2c_6pts"...
+la lecture a duré 0.00 secondes
+remplissage des structures de donnée...
+on a lu 15 booleens differents et 40 clauses non vides
+le remplissage des sdd  a duré 0.00 secondes
+ensemble inconsistant
+Il y a eut 0 modeles en 181 etapes
+La consistance a duree 0.01 secondes
+***********************
+lecture du fichier "Circuit"...
+la lecture a duré 0.00 secondes
+remplissage des structures de donnée...
+on a lu 65 booleens differents et 129 clauses non vides
+le remplissage des sdd  a duré 0.00 secondes
+pas d'autre modele
+Il y a eut 65536 modeles en 65 etapes
+La consistance a duree 2.20 secondes
+***********************
+lecture du fichier "Reines5"...
+la lecture a duré 0.00 secondes
+remplissage des structures de donnée...
+on a lu 50 booleens differents et 190 clauses non vides
+le remplissage des sdd  a duré 0.00 secondes
+pas d'autre modele
+Il y a eut 10 modeles en 50 etapes
+La consistance a duree 0.01 secondes
+***********************
+lecture du fichier "Reines5_quest"...
+la lecture a duré 0.00 secondes
+remplissage des structures de donnée...
+on a lu 50 booleens differents et 215 clauses non vides
+le remplissage des sdd  a duré 0.01 secondes
+ensemble inconsistant
+Il y a eut 0 modeles en 302 etapes
+La consistance a duree 0.00 secondes
+***********************
+lecture du fichier "Reines6"...
+la lecture a duré 0.00 secondes
+remplissage des structures de donnée...
+on a lu 72 booleens differents et 332 clauses non vides
+le remplissage des sdd  a duré 0.01 secondes
+pas d'autre modele
+Il y a eut 4 modeles en 309 etapes
+La consistance a duree 0.01 secondes
+***********************
+lecture du fichier "Reines6_quest2"...
+la lecture a duré 0.01 secondes
+remplissage des structures de donnée...
+on a lu 72 booleens differents et 333 clauses non vides
+le remplissage des sdd  a duré 0.00 secondes
+ensemble inconsistant
+Il y a eut 0 modeles en 1234 etapes
+La consistance a duree 0.01 secondes
+***********************
+lecture du fichier "Reines6_quest1"...
+la lecture a duré 0.01 secondes
+remplissage des structures de donnée...
+on a lu 72 booleens differents et 368 clauses non vides
+le remplissage des sdd  a duré 0.00 secondes
+pas d'autre modele
+Il y a eut 4 modeles en 212 etapes
+La consistance a duree 0.01 secondes
+***********************
+lecture du fichier "Reines8"...
+la lecture a duré 0.02 secondes
+remplissage des structures de donnée...
+on a lu 128 booleens differents et 800 clauses non vides
+le remplissage des sdd  a duré 0.01 secondes
+pas d'autre modele
+Il y a eut 92 modeles en 901 etapes
+La consistance a duree 0.24 secondes
+***********************
+lecture du fichier "Circuit_quest"...
+la lecture a duré 0.05 secondes
+remplissage des structures de donnée...
+on a lu 73 booleens differents et 386 clauses non vides
+le remplissage des sdd  a duré 0.00 secondes
+ensemble inconsistant
+Il y a eut 0 modeles en 22256 etapes
+La consistance a duree 0.25 secondes
+***********************
+lecture du fichier "Sendmory"...
+la lecture a duré 0.25 secondes
+remplissage des structures de donnée...
+on a lu 164 booleens differents et 2492 clauses non vides
+le remplissage des sdd  a duré 0.04 secondes
+pas d'autre modele
+Il y a eut 1 modeles en 876 etapes
+La consistance a duree 0.07 secondes
+***********************
+lecture du fichier "Sendmory_quest"...
+la lecture a duré 0.26 secondes
+remplissage des structures de donnée...
+on a lu 164 booleens differents et 2493 clauses non vides
+le remplissage des sdd  a duré 0.04 secondes
+ensemble inconsistant
+Il y a eut 0 modeles en 1089 etapes
+La consistance a duree 0.06 secondes
+***********************
+Incident de segmentation
+***********************
+lecture du fichier "Schur_3b_13j"...
+la lecture a duré 0.74 secondes
+remplissage des structures de donnée...
+on a lu 420 booleens differents et 3782 clauses non vides
+le remplissage des sdd  a duré 0.15 secondes
+pas d'autre modele
+Il y a eut 3 modeles en 1015 etapes
+La consistance a duree 0.17 secondes
+***********************
+lecture du fichier "Schur_3b_14j"...
+la lecture a duré 1.02 secondes
+remplissage des structures de donnée...
+on a lu 480 booleens differents et 4622 clauses non vides
+le remplissage des sdd  a duré 0.21 secondes
+ensemble inconsistant
+Il y a eut 0 modeles en 2384 etapes
+La consistance a duree 0.25 secondes
+***********************
+Incident de segmentation
+***********************
+lecture du fichier "Erdos_Szekeres10"...
+la lecture a duré 3.78 secondes
+remplissage des structures de donnée...
+on a lu 1200 booleens differents et 4430 clauses non vides
+le remplissage des sdd  a duré 0.33 secondes
+ensemble inconsistant
+Il y a eut 0 modeles en 210290 etapes
+La consistance a duree 25.94 secondes
+***********************
+Incident de segmentation
+***********************
+Incident de segmentation
+***********************
+fin
