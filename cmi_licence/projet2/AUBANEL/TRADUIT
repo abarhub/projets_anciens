@@ -1,0 +1,9 @@
+#!/bin/csh
+
+echo "salut1"
+cat "$1" >tmp.tmp
+echo "salut3"
+tr -d '\015' <tmp.tmp > "$1.new"
+echo "salut2"
+mv "$1" "$1.old"
+mv "$1.new" "$1"

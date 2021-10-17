@@ -1,0 +1,105 @@
+#open "arbre";;
+#open "excep";;
+
+(* fonctions de simplification *)
+
+let rec regroupe_plus exp val = match (exp,val) with
+	(Plus (Flotant f1,Var v),val) -> (Var v,val+.f1)
+	| (Plus (Var v,Flotant f1),val) -> (Var v,(val+.f1))
+	| (Moins (Var v,Flotant f1),val) -> (Var v, (val-.f1))
+	| (Moins (Flotant f1,Var v),val) -> 
+		(Moins_u (Var v),(val+.f1))
+	
+	| (Plus (Flotant f1,e),val) -> regroupe_plus e (val+.f1)
+	| (Plus (e,Flotant f1),val) -> regroupe_plus e (val+.f1)
+	| (Moins (e,Flotant f1),val) -> regroupe_plus e (val-.f1)
+	| (Moins (Flotant f1,e),val) -> regroupe_plus (Moins_u e) (val+.f1)
+	| ((Fois (e1,e2)) as e,val) -> ( e , val)
+	| ((Div (e1,e2)) as e,val) -> ( e , val)
+	| (Plus (e1,e2),val) -> let t1=regroupe_plus e1 val and
+		t2=regroupe_plus e2 0. in
+		(Plus (fst t1,fst t2), (snd t1)+.(snd t2))
+	| (Moins (e1,e2),val) -> let t1=regroupe_plus e1 val and
+		t2=regroupe_plus e2 0. in
+		(Moins (fst t1,fst t2), (snd t1)-.(snd t2))
+	| (Sin (e),val) -> (Sin e,val)
+	| (Cos (e),val) -> (Cos e,val)
+	| (Log (e),val) -> (Log e,val)
+	| (Abs (e),val) -> (Abs e,val)
+	| (Moins_u (e),val) -> let t= regroupe_plus e 0. in
+		(Moins_u (fst t),val-.(snd t))
+	| (Plus_u (e),val) -> let t= regroupe_plus e 0. in
+		(Plus_u (fst t),val+.(snd t))
+	| (Flotant f,_) -> raise (Regroupe_plus f)
+	| (Var v,val) -> (Var v, val)
+;;
+
+let regroupe_plus2 exp =
+	let tmp=regroupe_plus exp 0. in
+	match snd tmp with
+	0. -> fst tmp
+	| val -> Plus ( fst tmp, Flotant (val))
+;;
+
+let rec simplifie = function 
+	| Plus (Flotant 0. ,e) -> 
+		(fst (simplifie (e)),true)
+	| Plus (e,Flotant 0.) -> 
+		(fst (simplifie (e)),true)
+	| Plus (Plus(e,Flotant f1),Flotant f2) -> 
+		(regroupe_plus2 
+			(Plus(Flotant(f1+.f2),fst (simplifie (e)))),true)
+	| Moins (e,Flotant 0.) -> 
+		(fst (simplifie (e)),true)
+	| Moins (Flotant 0.,e) -> (Moins_u(fst (simplifie (e))),true)
+	| Fois (e,Flotant 0.) -> (Flotant(0.),true)
+	| Fois (Flotant 0.,e) -> (Flotant(0.),true)
+	| Fois (Flotant 1.,e) -> (fst (simplifie e),true)
+	| Fois (e,Flotant 1.) -> (fst (simplifie e),true)
+	| Fois (Flotant f1,Flotant f2) -> (Flotant (f1*.f2),true)
+	| Div (Flotant 0.,e) -> (Flotant 0.,true)
+	| Div (e,Flotant 1.) -> (fst (simplifie e),true)
+	| Plus (e1,Moins_u e2) -> 
+		let exp1=simplifie e1 and exp2=simplifie e2 in
+		(Moins (fst exp1,fst exp2),true)
+	| Plus (Moins_u e2,e1) -> 
+		let exp1=simplifie e1 and exp2=simplifie e2 in
+		(Moins (fst exp1,fst exp2),true)
+	| Moins_u (Flotant f) -> (Flotant (-. f),true)
+	| Moins_u (Moins_u e) -> 
+		let exp=simplifie e in
+		(fst exp,true)
+	(* regles qui ne simplifie pas *)
+	| Plus (e1,e2) -> let exp1=simplifie e1 and exp2=simplifie e2 in
+		(Plus(fst exp1,fst exp2),(snd exp1) or (snd exp2))
+	| Moins (e1,e2) -> let exp1=simplifie e1 and exp2=simplifie e2 in
+		(Moins(fst exp1,fst exp2),(snd exp1) or (snd exp2))
+	| Fois (e1,e2) -> let exp1=simplifie e1 and exp2=simplifie e2 in
+		(Fois(fst exp1,fst exp2),(snd exp1) or (snd exp2))
+	| Div (e1,e2) -> let exp1=simplifie e1 and exp2=simplifie e2 in
+		(Div(fst exp1,fst exp2),(snd exp1) or (snd exp2))
+	| Plus_u e -> let exp=simplifie e in
+		(fst exp,snd exp)
+	| Moins_u e -> let exp=simplifie e in
+		(Moins_u (fst exp),snd exp)
+	| Sin e -> let exp=simplifie e in
+		(Sin(fst exp),snd exp)
+	| Cos e -> let exp=simplifie e in
+		(Cos(fst exp),snd exp)
+	| Log e -> let exp=simplifie e in
+		(Log(fst exp),snd exp)
+	| Abs e -> let exp=simplifie e in
+		(Abs(fst exp),snd exp)
+	| e -> (e,false);;
+
+let rec iter_simplifie exp n =
+	let e=simplifie exp in
+		if n>0 & snd e=true then iter_simplifie (fst e) (n-1)
+		else fst e
+;;
+
+(* let simplifie_init exp =simplifie (simplifie (simplifie exp));; *)
+
+let simplifie_init exp = 
+	 regroupe_plus2 (iter_simplifie exp 20)
+;;

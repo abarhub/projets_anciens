@@ -1,0 +1,13 @@
+void toto()
+begin {cvxb}
+
+end {cvxb}
+
+int[1] toto(int toto,bool tata,bool a,int a)
+begin{a}
+	bool toto,a;
+	int tata,a;
+
+	a=1;b=5;
+end{a}
+

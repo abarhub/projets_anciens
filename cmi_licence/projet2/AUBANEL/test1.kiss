@@ -1,0 +1,26 @@
+
+
+
+Program inst_cmplx 
+begin {nimporte_quoi}
+        int i;
+        for(i=0;i<=10;i=i+1)
+        begin{for}
+                load("rien");
+        end {for} 
+        load(10);
+        unmap("chaine constante");
+        i=10;
+        if(i<-9) then
+        begin {if}
+                map(10);
+                load("nothing");
+                i=10;
+        end {if}                
+        else
+        begin {else}
+                load(10);
+                load("nichts");
+                i=10;
+        end {else}                                                      
+end {encore_autre_chose}

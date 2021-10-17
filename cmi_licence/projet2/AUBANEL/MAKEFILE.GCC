@@ -1,0 +1,54 @@
+
+
+parse.exe: parse.tab.o lexyy.o arbast.o verif.o erreur.o affich_rec.o gc.o main.o
+#	bison -d parse.y
+#	flex lexer.lex
+	gcc -oparse -fvolatile main.o lexyy.o parse.tab.o arbast.o verif.o erreur.o affich_rec.o gc.o
+#	gcc lexyy.c parse.tab.c arbast.c verif.c -oparse
+
+parse.tab.o: parse.y
+	bison -d parse.y
+	gcc -fvolatile -c  parse.tab.c
+
+lexyy.o: lexer.lex parse.tab.o
+	flex lexer.lex
+	gcc -fvolatile -c lexyy.c
+
+arbast.o: arbast.c
+	gcc -fvolatile -c  arbast.c
+
+verif.o: verif.c
+	gcc -fvolatile -c  verif.c
+
+erreur.o: erreur.c
+	gcc -fvolatile -c  erreur.c
+
+affich_rec.o: affich_rec.c
+	gcc -fvolatile -c  affich_rec.c
+
+gc.o: gc.c gc.h
+	gcc -fvolatile -c gc.c
+
+main.o: main.c
+	gcc -fvolatile -c  main.c
+
+# sous capucine il faut utiliser cette regle
+all2:
+	bison -d parse.y
+	flex lexer.lex
+	gcc  -o parse lexyy.c parse.tab.c arbast.c verif.c 
+
+test:
+	parse <test1.kiss
+
+testall:
+	parse *.kiss
+
+test2:
+	parse *.kiss | grep "correct|e fich"
+
+clean:
+	rm *.o
+
+emacs:
+	emacs type.h parse.y verif.c arbast.c lexer.lex verif.h arbast.h &

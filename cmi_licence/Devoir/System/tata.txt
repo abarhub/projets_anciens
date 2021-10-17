@@ -1,0 +1,22 @@
+#define Allo
+#LINUX
+#define LI
+
+cvbcx
+cxbvcx
+45564
+
+4564
+#ifdef LI
+LI est defini
+#
+#else
+Li n est pas defini
+#endif
+
+#ifdef TOTO
+Toto est defini
+#endif
+fdgfd
+gfhfd
+fin

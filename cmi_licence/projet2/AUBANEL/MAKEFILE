@@ -1,0 +1,83 @@
+# makefile du projet de compilation
+# les ifdef ne sont pas compatibles entre le programme make de borland et celui de gcc
+
+# varibles pour borland c 5.5
+#OPT = -wall -r- -y -v
+#CC = bcc32
+#EXEC = -eparse.exe
+#OBJ = .obj
+#LIB = c:\bcc55\lib\wildargs.obj
+#DEL = del
+
+#variables pour gcc (unix, djgpp, ...)
+OPT = -Wall -ggdb3
+CC = gcc
+
+OBJ = .o
+LIB = 
+ifdef COMSPEC
+DEL = del
+OUTPOUT = parse.exe
+else
+DEL = rm
+OUTPUT = parse
+endif
+EXEC = -o $(OUTPUT)
+# macro pour tous les compilateurs
+OBJET = $(SRC:.c=$(OBJ))
+SRC = main.c lex.yy.c parse.tab.c arbast.c verif.c erreur.c affich_rec.c gc.c
+
+
+$(OUTPUT): $(OBJET)
+	$(CC) $(OPT) $(EXEC) $(OBJET) $(LIB)
+
+parse.tab$(OBJ): parse.y
+	bison -d parse.y
+	$(CC) $(OPT) -c parse.tab.c
+
+lex.yy$(OBJ): lexer.lex parse.tab$(OBJ)
+	flex lexer.lex
+	$(CC) $(OPT) -c lex.yy.c
+
+arbast$(OBJ): arbast.c
+	$(CC) $(OPT) -c arbast.c
+
+verif$(OBJ): verif.c
+	$(CC) $(OPT) -c verif.c
+
+erreur$(OBJ): erreur.c
+	$(CC) $(OPT) -c erreur.c
+
+affich_rec$(OBJ): affich_rec.c
+	$(CC) $(OPT) -c affich_rec.c
+
+gc$(OBJ): gc.c gc.h
+	$(CC) $(OPT) -c gc.c
+
+main$(OBJ): main.c
+	$(CC) $(OPT) -c main.c
+
+# sous capucine il faut utiliser cette regle
+all2:
+	bison -d parse.y
+	flex lexer.lex
+	gcc  -o parse lexyy.c parse.tab.c arbast.c verif.c 
+
+test:
+	parse <test1.kiss
+
+testall:
+	parse *.kiss
+
+test2:
+	parse *.kiss | grep "correct|e fich"
+
+clean:
+	$(DEL) *$(OBJ)
+	$(DEL) parse.tab.* lex.yy.* 
+
+touch:
+	touch makefile $(OUTPUT)
+
+emacs:
+	emacs type.h parse.y verif.c arbast.c lexer.lex verif.h arbast.h &

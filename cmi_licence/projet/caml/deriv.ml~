@@ -1,0 +1,5 @@
+#open "arbre";;
+
+let derivation arbre =
+       let var= snd arbre in
+               

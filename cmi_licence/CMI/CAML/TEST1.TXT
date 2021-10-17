@@ -1,0 +1,25 @@
+(* un ensemble de testes *)
+1+2+2+k+6+3*9+.2*j*5+5/3/5*3+6/1,k; 
+l*1+1*1*0,l;
+1+2+2+k+6+3*9+.2*j*5+5/3/5*3+6/1,k;
+1+-cos(2*x+1)+-2+-3*-4++sad+a*b*c+2*x+3*x,x;
+5*9,l; 
+(a+(b+(c+(d+e)))),l;
+l*(8+l/(p+m)+95.12)*7/1*0+6,k;
+(a+b)+c+(d+l)*(e+r)+d*(h+p),k;
+a+b*c+d,k;
+(a+b)*(c+d),k; (* dfdhdbhgfvb gds *)
+-(a+b)*-(c+d),k;
+-(a+b+c)+m-l+8,k;
+-(a+b+c+1)+m-l+8,k;
+a+b-c+d-(e+f)+g,k;
+-a-b+c+d,k;
+(a-b)*(c-d),k;
+a*b*c*d,k;
+a/b*c/d*g,k;
+-cos(x)-sin(x)+a+b,k;
+(-cos(x)-sin(x)+a+b)*(f+l),k;
+(-cos(x)+sin(x)+a+b)*(f+0),k;
+-a+b+c+g/b,k;
+a+b+c-a-b-c,k;
+(a+b)-(a+b)+(a+b),k; (* erreur: ne doit pas retourner 0 *)

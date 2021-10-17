@@ -1,0 +1,15 @@
+Salut,
+
+J'ai reussi a vaoir un programme qui marche avec les faces cachees,
+et les ombres :). Je l'ai essayer sur le cube, le canard,
+et le fichiers simple que j'ai fait. Il est tres long a affiche,
+et je n'ai pas eu la patience pour l'avion. Il y a encore plein
+d'affichage et du code de test, maisje ne pense pas qu'il
+ai encore des bugs, sauf peut-erte avec la fonction decoupe.
+Je pense que aucun des fichier ne doit decouper l'objet, 
+donc c'est pas grave. Je ne sais pas si on fait
+le z-buffering, ou les surfaces de bezier. Si tu a des questions,
+des ameliorations, ... . Je t'envoie presque tout le projet,
+au cas ou tu aurais des pb avec tes fichiers et les miens.
+
+A+

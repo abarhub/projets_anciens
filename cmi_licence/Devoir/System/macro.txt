@@ -1,0 +1,14 @@
+#define MAX
+#fgfdgfsd
+cvxbxcvbcxv
+dfsbfgbvcnxb
+vcbxcvbxcv
+#define MIN ( dfsg, ffd ) vcxbcvxvcb dfsg
+
+vcxnbvnbcv
+cxvbvxcnbvc
+fdbvcxbvc
+
+#define A(X) fgfdsgfd gfnbcxcbx
+
+#define B(X,Y) (X<Y)

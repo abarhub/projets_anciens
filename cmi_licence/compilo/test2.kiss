@@ -1,0 +1,9 @@
+Program Test
+begin {coucou}
+	int a,b,c;
+	bool q,r;
+	a=b;
+	c=5*9+a;
+	//  commentaire 1
+	/* commentaire 2 */
+end {coucou}

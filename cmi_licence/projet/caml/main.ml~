@@ -1,0 +1,146 @@
+#open "excep";;
+#open "arbre";;
+(* Module principal *)
+
+print_string "module main\n";flush std_out;;
+
+exception Fichier_non_ouvert of string;;
+
+let expr = function Arbre(e,_) ->e;;
+
+(* affiche l'expression *)
+let affiche exp =
+	let rec affiche_rec =function
+	| Flotant(f)	-> 
+		print_string " ";
+		print_float f;
+		print_string " ";
+		flush std_out;
+	| Var(nom)	-> 
+		print_string (" "^nom^" ");
+		flush std_out;
+	| Plus(e1,e2)	->
+		print_string("(");
+		affiche_rec e1;
+		print_string ")+(";
+		affiche_rec e2;
+		print_string(")");
+		flush std_out;
+	| Fois(e1,e2)	->
+		print_string("(");
+		affiche_rec e1;
+		print_string ")*(";
+		affiche_rec e2;
+		print_string(")");
+		flush std_out;
+	| Div(e1,e2)	->
+		print_string("(");
+		affiche_rec e1;
+		print_string ")/(";
+		affiche_rec e2;
+		print_string(")");
+		flush std_out;
+	| Moins(e1,e2)	->
+		print_string("(");
+		affiche_rec e1;
+		print_string ")-(";
+		affiche_rec e2;
+		print_string(")");
+		flush std_out;
+	| Moins_u(exp)	->
+		print_string("-(");
+		affiche_rec exp;
+		print_string ")";
+		flush std_out;
+	| Plus_u(exp)	->
+		print_string("+(");
+		affiche_rec exp;
+		print_string ")";
+		flush std_out;
+	| Sin(exp)	->
+		print_string("sin(");
+		affiche_rec exp;
+		print_string ")";
+		flush std_out;
+	| Log(exp)	->
+		print_string("log(");
+		affiche_rec exp;
+		print_string ")";
+		flush std_out;
+	| Vide		->
+		print_newline ();
+		flush std_out;
+	in
+		affiche_rec exp;
+		print_newline ();
+		flush std_out
+;;
+
+print_string "module main2\n";flush std_out;;
+
+(* annalyse a partir du fichier standard d'entree *)
+let parse_stdin () =
+	let lexbuf =
+		lexing__create_lexer_channel std_in 
+	in
+		try
+			let result=parser__Main lexer__Token lexbuf
+			in
+				expr result
+		with Eof -> Vide
+				
+;;
+
+print_string "module main3\n";flush std_out;;
+
+(* annalyse a partir du fichier nom *)
+let parse_fichier nom =
+	try 
+		let lexbuf = lexing__create_lexer_channel 
+			(open_in nom)
+		in
+			try
+				let result=parser__Main lexer__Token lexbuf
+				in
+					expr result
+			with Eof -> Vide (* fin du fichier *)
+	with sys__Sys_error s -> 
+		raise (Fichier_non_ouvert(nom))
+;;
+
+print_string "declaration de main\n";;
+let main ()=
+	print_string (string_of_bool sys__interactive );
+	flush std_out;
+	print_string "salut a tous";
+	print_newline ();
+	print_int((vect_length sys__command_line));
+	print_string "suite\n";
+	(*print_newline ();*)
+	flush std_out;
+	print_string "avant le exit\n";
+	flush std_out;
+	(* io__exit 0; *)
+	print_string "apres le exit fin\n";
+	flush std_out;
+	try
+		if not sys__interactive && 
+			(vect_length sys__command_line) == 2 then
+			affiche (parse_fichier (vect_item sys__command_line 1))
+		else
+			affiche (parse_stdin ())
+		;
+		(* interactive *)
+		print_string "coucou\n";
+		flush std_out;
+		affiche (parse_fichier "test1.txt")
+	with
+		Failure str -> 
+			print_string ("Exception dans le main:"^str)
+		| Fichier_non_ouvert nom 
+			-> print_string ("Erreur:impossible d'ouvrir le"^
+					" fichier "^nom)
+;;
+
+print_string "exec de main\n";;
+main();;

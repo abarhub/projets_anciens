@@ -1,0 +1,17 @@
+cube: cube.o outils2d.o outils3d.o lgx.o
+	gcc -o cube cube.o outils2d.o outils3d.o lgx.o -L/root/image/lgx.h -L/usr/X11R6/lib -lX11 -lm
+
+cube.o: cube.c 3d.h
+	gcc -c cube.c
+
+outils2d.o: outils2d.c 2d.h
+	gcc -c outils2d.c
+
+outils3d.o: outils3d.c 3d.h
+	gcc -c outils3d.c
+
+lgx.o: lgx.c
+	gcc -c lgx.c
+
+clean:
+	rm *.o && rm cube

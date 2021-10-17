@@ -1,0 +1,134 @@
+Rapport du projet d'image TP3
+
+Aubanel Vincent
+Barret Alain
+
+Description du programme:
+
+Ce programme affiche des objets en 3d en fils de fer,
+en utilisant l'algorithme du peintre, et l'algorithme du z-buffer.
+Les parametres peuvent etre modifie par l'utilisateur.
+Il y a des parametres predefinies pour chaque objets.
+
+*********************************************
+
+Le programme est compose en 4 parties:
+- les fonctions d'affichage en 2d et 3d (outils2d.c outils3d.c lgx.c)
+- les fonctions d'affichage suivant l'algorithme du peintre (peintre.c)
+- les fonctions d'affichage suivant l'algorithme du z-buffer (outils_zbuff.c zbuffer.c)
+- les fonctions qui appelles ces fonctions (cube.c)
+
+les fonction pour l'affichage 2d et 3d sont les memes que ceux vues en TD.
+
+*********************************************
+
+Pour l'algorithme du peintre:
+
+Explication des fonctions utilisees:
+
+* peintre:
+construit dans liste_faces la liste des faces. on trie ce tableau en ordre croissant des zmin.
+Pour P=les faces de ce tableau en commencant par les zmin les plus petits:
+   soit P la face a traiter et S la suivante.
+   si P.zmax<=S.zmin alors
+      P est bien place donc on passe a la face suivante.
+   sinon
+      P est peut-etre mal place, il va falloir le modifier.
+      Pour tout S = toutes les faces non traitees:
+	 si P et S sont males placees, alors,
+	    on echange S et P
+	    si P est toujours mal place dans la liste des faces a traiter, alors
+	       on decoupe P avec le plan contenant la face a traiter qui
+	       a permis de detecter que P est mal place, et on continue la 1ere boucle.
+	    fin si
+	 fin si
+      fin pour
+   fin si
+fin pour
+on calcul les projetes des faces dans liste_faces.
+on affiche les faces, puis on effaces le tableau liste_faces
+
+
+* ordre_correcte:
+pour calculer si l'ordre est correcte pour 2 faces P et S,
+on determine si:
+   - les rectangles englobant P et S ont une intersection,
+   - le point de vise a le meme signe dans l'equation du plan contenant
+   P que chaque sommet de S
+   - le point de vise a un signe different dans l'equation du plan
+   contenant S que chaque sommet de P
+   -Soit P' le projete de P et S' le projete de S. Si les sommets de S' sont dans le
+   polygonne de P' ou s'il y a intersection entre les cotes de P' et S'.
+Si un des test est positif, l'ordre est correcte, sinon, l'ordre n'est pas correcte.
+
+* equ_plan:
+pour calculer l'equation du plan a*x+b*y+c*z+d=0 contenant une face F, je determine p1
+le vecteur representant le 1er cote, et p2 un vecteur entre 2 sommets
+de F non colineaire a p1. On calcul le vecteur normal n a ces 2 vecteurs
+avec le produit vectoriel, et alors :
+n:=p1/\p2
+(a,b,c):=n et
+d:= -n.(1er sommets de F)
+
+* intersection3d:
+pour determiner si 2 segements (s1-s2) et (p1-p2) dans le (xOy) ont une intersection,
+je calcul le produit croise:
+a:=(s1.x-p1.x)*(p2.y-p1.y)-(p2.x-p1.x)*(s1.y-p1.y)
+b:=(s2.x-p1.x)*(p2.y-p1.y)-(p2.x-p1.x)*(s2.y-p1.y)
+c.a.d. que je calcul l'aire algebrique des parallelogrammes ((p1-s1),(p1-p2)) et
+((p1-s2),(p1,p2)). Si les aires sont de meme signe, ca signifie que s1 et s2 sont du meme
+cote de (p1-p2), donc s1-s2 ne coupe pas (p1-p2).
+
+* decoupe:
+pour decouper une face P suivant le plan contenant la face S, on determine le plan
+contenant S, on initialise les 2 listes de sommets l1 et l2, respectivement
+au 1er sommet de P et a la liste vide.
+Pour t=chaque sommet de P qui reste a ajouter:
+     si le signe de t par le plan de S n'a pas le meme signe que le sommet precedant, alors
+	il y a intersection entre le plan et l'arete (t-1,t)
+	on calcul le point d'intersection entre le plan et l'arete.
+	on ajoute ce point au 2 listes.
+     fin si
+     si t a le meme signe que le 1er sommet de P, alors
+	on ajoute t a l1
+     sinon
+	on ajoute t a l2
+     fin si
+fin pour
+on ajoute la liste avec le plus petit zmin a la place de P, et
+l'autre liste juste avant la face ayant un zmin plus grand, ou s'il
+n'y en a pas, a la fin de la liste des faces
+
+*********************************************
+
+Pour l'algorithme du zbuffer:
+
+fonction z_buffer() :
+
+on initialise HauteuR et LargeuR qui permettent de travailler sur une fenetre reduite par rapport a l'originale
+on appelle invcoeff() (pour pouvoir utiliser pixtop() )
+on alloue une fois pour toutes la matrice du z-buffer et les deux tableaux qui permettent de remplir une face pixel par pixel
+on initialise ces tableaux
+pour chaque face
+     on appelle remplit_face() qui allume ou non les pixels selon leur "profondeur"
+
+
+fonction remplit_face() :
+
+pour chaque segment de la face
+     on appelle remplit_limites_
+
+*********************************************
+
+Pour les fonctions qui gerent l'ensemble du programme:
+
+La fonction menu appel les fonctions suivant les souhait de l'utilisateur.
+
+*********************************************
+
+divers:
+
+Pour compiler le programme:
+- on met le fichier zip dans un repertoire vide, et on se place dedans,
+- on dezip le programme: tar xzvf projet.tgz
+- on compile: make

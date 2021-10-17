@@ -1,0 +1,2186 @@
+#include"2d.h"
+#include"3d.h"
+#include<math.h>
+#include<stdio.h>
+#include<string.h>
+#include<stdlib.h>
+
+
+#define STOP(X,Y) if(!(X)){printf("Erreur ligne %d du fichier %s:stop(%s)\n",\
+				  __LINE__,__FILE__,#X);Y;exit(2);}
+#define INTER(X,Y,Z) (((X)>=(Y))&&((X)<=(Z)))
+
+
+MATRICE M15,Mt;
+double pscal3d(POINT u,POINT v);
+
+void mulmat(MATRICE A, MATRICE B, MATRICE C)
+{
+  int i,j,k;
+
+  for(i=0;i<4;i++)
+    for(j=0;j<4;j++)
+      {
+	C[i][j]=0;
+	for(k=0;k<4;k++)
+	  C[i][j]+=A[i][k]*B[k][j];
+      }
+  //affiche_mat(C,"c");
+}
+
+POINT mulmavec(MATRICE M, POINT X)
+{
+  POINT R;
+
+  R.x=M[0][0]*X.x+M[0][1]*X.y+M[0][2]*X.z+M[0][3]*X.t;
+  R.y=M[1][0]*X.x+M[1][1]*X.y+M[1][2]*X.z+M[1][3]*X.t;
+  R.z=M[2][0]*X.x+M[2][1]*X.y+M[2][2]*X.z+M[2][3]*X.t;
+  R.t=M[3][0]*X.x+M[3][1]*X.y+M[3][2]*X.z+M[3][3]*X.t;
+
+  return R;
+}
+
+void changement_repere(OBJET *ob)
+{
+  int i;
+
+  for(i=0;i<ob->ns;i++)
+  {
+    //printf("%d %d\n",i,ob->ns);
+    ob->so[i]=mulmavec(M15,ob->so[i]);
+  }
+}
+
+void retour_cartesiennes(POINT *P)
+{
+  //printf("P->z=%lf ",P->z);
+  P->x/=P->t;
+  P->y/=P->t;
+  P->z/=P->t;
+  P->t/=P->t;
+  //printf("P->z=%lf\n",P->z);
+}
+
+void objet_cartesiennes(OBJET *obj)
+{
+  int i,j;
+  
+  for(i=0;i<obj->ns;i++)
+  {
+    retour_cartesiennes(&((obj->tso)[i]));
+  }
+}
+
+void transformation_perpective(OBJET *obj)
+{
+  int i;
+  
+  for(i=0;i<obj->ns;i++)
+  {
+    //printf("%d\n",i);
+     obj->tso[i]=mulmavec(Mt,obj->so[i]);
+  }
+}
+
+void transformation_orthogonale(OBJET *obj)
+{
+  int i;
+  
+  for(i=0;i<obj->ns;i++)
+  {
+    //printf("%d\n",i);
+     obj->tso[i]=obj->so[i];
+  }
+}
+
+void trace_arete(POINT A, POINT B)
+{
+  POINT2D a1, b1;
+  
+  a1.x=A.x; a1.y=A.y;
+  b1.x=B.x; b1.y=B.y;
+
+  tracer(a1,b1);
+}
+
+void visual_transpar(OBJET T)
+{
+  int i;
+
+  //printf("affichage transp\n");
+  for(i=0;i<T.na;i++)
+    if(T.ar[i].nat)
+      {
+	trace_arete(T.tso[T.ar[i].nor-1],T.tso[T.ar[i].nex-1]);
+	/*
+	  printf("%d (%lf,%lf)(%d)   (%lf,%lf)(%d)\n",i+1,
+	  T.tso[T.ar[i].nor-1].x,
+	  T.tso[T.ar[i].nor-1].y,
+	  //T.tso[T.ar[i].nor].z,
+	  T.ar[i].nor-1,
+	  T.tso[T.ar[i].nex-1].x,
+	  T.tso[T.ar[i].nex-1].y,
+	  //T.tso[T.ar[i].nex].z,
+	  T.ar[i].nex-1);
+	*/
+      }
+}
+
+typedef struct FACE2 
+{
+  double x0,y0,x1,y1;
+  double zmin,zmax;
+  //FACE *face;
+  POINT *sommets;
+  int no_face,nb_sommets;
+  int couleur;
+} FACE2;
+
+#define PRECIS (1.0/1000.0)
+
+#define PRECISION (10000.0)
+// retourne la difference entre les zmin
+// utilise par qsort en considerant
+// la precision PRECISION
+int cmp(const void *a,const void *b)
+{
+  return (int)(( ((FACE2*)a)->zmin *PRECISION) - 
+	       ( ((FACE2*)b)->zmin *PRECISION));
+}
+
+// calcul la transformation du point
+void transforme_point(POINT *p)
+{
+  extern int perspective;
+  
+  if(perspective==1)
+    {
+      *p=mulmavec(Mt,*p);
+      retour_cartesiennes(p);
+    }
+}
+
+// initialise l'affichage et calcul la cloture
+void initialiser_affichage2(OBJET *objet,FACE2 *liste_faces,int taille)
+{
+  int i,j;
+  double minx,maxx,miny,maxy;
+  extern double r,d,phi,theta,psi;
+  extern int perspective;
+
+  //minx=maxx=miny=maxy=0;
+  /*
+    printf("on va initialiser M15 avec\n");
+    printf("xo=%.1lf yo=%.1lf zo=%.1lf\n",xo,yo,zo);
+    printf("phi=%.2lf theta=%.2lf psi=%.2lf\n",phi,theta,psi);
+    printf("et Mt avec\n");
+    printf("d=%.1lf r=%.1lf\n",d,r);
+  */
+  //printf("tout2\n");
+  /*
+  remplir_M15(xo,yo,zo,phi,theta,psi);//affiche_mat(M15,"M15");
+      remplir_Mt(d,r);//affiche_mat(Mt,"Mt");
+      printf("tout3\n");
+      changement_repere(objet); //utilise ns, so, M15
+  */
+      printf("tout6\n");
+      if(perspective==1)
+	{
+	  for(i=0;i<taille;i++)
+	    {
+	      for(j=0;j<liste_faces[i].nb_sommets;j++)
+		{
+		  /*
+		  liste_faces[i].sommets[j]=mulmavec(Mt,
+						      liste_faces[i].sommets[j]);
+		  retour_cartesiennes(&(liste_faces[i].sommets[j]));
+		  */
+		  transforme_point(&(liste_faces[i].sommets[j]));
+		}
+	    }
+	}
+      /*
+      if(perspective==1)
+	{
+	  transformation_perpective(objet); //utilise ns, so, tso, Mt
+	  printf("tout7\n");
+	  objet_cartesiennes(objet); //utilise ns, tso
+	}
+      else
+	{
+	  transformation_orthogonale(objet);
+	}
+      */
+      //objet_cartesiennes(objet); //utilise ns, tso
+  printf("tout1\n");
+  /*
+  for(i=0;i<objet->ns;i++)
+    {
+      if(objet->tso[i].x<minx)
+	minx=objet->tso[i].x;
+      if(objet->tso[i].x>maxx)
+	maxx=objet->tso[i].x;
+      if(objet->tso[i].y<miny)
+	miny=objet->tso[i].y;
+      if(objet->tso[i].y>maxy)
+	maxy=objet->tso[i].y;
+    }
+  
+  for(i=0;i<taille;i++)
+    {
+      for()
+      if(liste_faces[i]
+    }
+  printf("tout4\n");
+  clo.min.x=minx;
+  //clo.min.y=0;
+  clo.min.y=miny;
+  //clo.max.x=largeur();
+  clo.max.x=maxx;
+  //clo.max.y=hauteur();
+  clo.max.y=maxy;
+printf("tout5\n");
+  calculcoeff(clo,fen2);
+  */
+}
+
+// trie le tableau face avec taille elements
+void trie(FACE2 *face,int taille)
+{
+  qsort(face,taille,sizeof(FACE2),cmp);
+}
+
+double norme3d(POINT *p)
+{
+  return sqrt(p->x*p->x+p->y*p->y+p->z*p->z);
+}
+
+POINT pvect3d(POINT u,POINT v);
+extern double xo,yo,zo;
+void affiche_faces(FACE2 *liste,int nb);
+
+// affiche la face f
+void trace_face(OBJET *objet,FACE2 *f)
+{
+  FACE *faso;
+  POINT p1,p2,p3;
+  int *p,i,j;
+  double incx,incy,c;
+  POINT2D a1, a2,*p4;
+  const int discr=100;
+  
+  
+  /*a1.x=A.x; a1.y=A.y;
+  b1.x=B.x; b1.y=B.y;
+
+  tracer(a1,b1);*/
+  
+  /*faso=objet->faso;
+  p=faso[face+1];
+  i=0;
+  do
+    {
+      p1=objet->tso[p[i]];
+      p2=objet->tso[p[i+1]];
+      trace_arete(p1,p2);
+      i++;
+    }
+    while(p[i+1]!=p[0]);*/
+  //p1=p->;
+  //p3=pvect3d(p1,p2);
+  
+  /*
+    // affiche dans couleur interieur
+    for(i=0;i<f->nb_sommets-1;i++)
+    {
+      trace_arete(f->sommets[i],f->sommets[i+1]);
+    }
+    trace_arete(f->sommets[i],f->sommets[0]);
+  */
+  
+  /*
+  // dessine en coloriant avec des lignes
+  //for(k=0;k<
+  for(i=1;i<f->nb_sommets-1;i++)
+    {
+      incx=(f->sommets[i+1].x-f->sommets[i].x)/discr;
+      incy=(f->sommets[i+1].y-f->sommets[i].y)/discr;
+      a1.x=f->sommets[0].x;
+      a1.y=f->sommets[0].y;
+      for(j=0;j<discr;j++)
+	{
+	  a2.x=f->sommets[i].x+j*incx;
+	  a2.y=f->sommets[i].y+j*incy;
+	  tracer(a1,a2);
+	}
+    } 
+  */
+  
+  color(f->couleur);
+  
+  // affichage d'un poly plein
+  p4=calloc(f->nb_sommets,sizeof(POINT2D));
+  for(i=0;i<f->nb_sommets;i++)
+    {
+      p4[i].x=f->sommets[i].x;
+      p4[i].y=f->sommets[i].y;
+    }
+  polygone(p4,f->nb_sommets);
+  free(p4);
+  
+  
+  printf("c=%g nb gris=%d noir=%d blanc=%d j=%d\n",c,nb_gris(),NOIR,BLANC,j);
+  /*
+  color((NOIR-BLANC)/2);
+  
+  p=calloc(2*3,sizeof(int));
+  p[0]=0;p[1]=0;
+  p[2]=largeur()/2;p[3]=hauteur();
+  p[4]=largeur();p[5]=0;
+  polygon(p,f->nb_sommets*2);
+  free(p);
+  
+  
+  /*
+  a1.x=hauteur();
+  a1.y=largeur();
+  a2.x=0;
+  a2.y=0;
+  tracer(a1,a2); 
+  */
+}
+
+/* return 1 si les rectangles englobants les
+   faces f1 et f2 sont disjoint
+   et 0 sinon*/
+int disjoint(FACE2 *f1,FACE2 *f2)
+{
+  printf("disj%g %g %g %g\n",f1->x0,f1->x1,f2->x0,f2->x1);
+  if((f1->x0<f2->x0)&&(f2->x0<f1->x1))
+    {// disjoint
+      printf("d1\n");
+      return 0;
+    }
+  
+  if((f1->x0<f2->x1)&&(f2->x1<f1->x1))
+    {// disjoint
+      printf("d2\n");
+      return 0;
+    }
+
+  if((f1->y0<f2->y0)&&(f2->y0<f1->y1))
+    { // disjoint
+      printf("d3\n");
+      return 0;
+    }
+  
+  if((f1->y0<f2->y1)&&(f2->y1<f1->y1))
+    {// disjoint
+      printf("d4\n");
+      return 0;
+    }
+  
+  if((f2->x0<f1->x0)&&(f1->x0<f2->x1))
+    {// disjoint
+      printf("a1\n");
+      return 0;
+    }
+  
+  if((f2->x0<f1->x1)&&(f1->x1<f2->x1))
+    {// disjoint
+      printf("a2\n");
+      return 0;
+    }
+
+  if((f2->y0<f1->y0)&&(f1->y0<f2->y1))
+    { // disjoint
+      printf("a3\n");
+      return 0;
+    }
+  
+  if((f2->y0<f1->y1)&&(f1->y1<f2->y1))
+    {// disjoint
+      printf("a4\n");
+      return 0;
+    }
+  printf("disj=1\n");
+  // intersection
+  return 1;
+}
+
+#define PRECIS2 (1.0/1000.0)
+
+/*
+retourne 1 ssi x et y ont meme signe
+*/
+int meme_signe(double x,double y,double precis)
+{
+  /*
+    if(((x>0.0)&&(y>0.0))||((x<0.0)&&(y<0.0))
+     ||((x==0.0)&&(y==0.0)))
+    return 1;
+  
+  return 0;
+  */
+  if(precis<0) precis*=-1;
+  
+  if((x>=-precis)&&(x<=precis)) x=0.0;
+  if((y>=-precis)&&(y<=precis)) y=0.0;
+  
+  if(((x+precis>=0.0)&&(y+precis>=0.0))||
+     ((x-precis<=0.0)&&(y-precis<=0.0)))
+    return 1;
+  else
+    return 0;
+}
+
+POINT equ_plan(FACE2 *face);
+
+/*
+retourne vers_obs ssi la face est
+du cote de l'observateur par rapport au plan
+c.a.d. si vers_obs==1 -> 1 ssi face est du cote de l'observateur
+et si vers_obs==0 -> 1 ssi face est de l'autre cote de l'observateur
+*/
+int autre_cote(FACE2 *face,FACE2 *plan,int vers_obs)
+{
+  POINT v1,v2,v3,equ;
+  double espace_vers_obs,n,signe;
+  int i;
+  //extern double xo,yo,zo;
+  
+  printf("autre cote(%p %p %d)\n",face,plan,vers_obs);
+  printf("xo=%g yo=%g zo=%g\n",xo,yo,zo);
+  STOP(plan!=NULL,printf("err"));
+  STOP(plan->sommets!=NULL,printf("err"));
+  STOP(INTER(vers_obs,0,1),printf("err"));
+  STOP(plan->nb_sommets>=2,printf("err%d",plan->nb_sommets));
+  
+  equ=equ_plan(plan);
+  //STOP(equ.x!=0.0&&equ.y!=0.0&&equ.z!=0.0,printf("suface indefini\n "););
+  if(equ.x==0.0&&equ.y==0.0&&equ.z==0.0)
+    {
+      return 1;
+    }
+  espace_vers_obs=equ.x*xo+equ.y*yo+equ.z*zo+equ.t;
+  
+  printf("equ: x=%g y=%g z=%g t=%g\n",equ.x,equ.y,equ.z,equ.t);
+  printf("signe=%g\n",espace_vers_obs);
+  
+  printf("autre cote2\n");
+  for(i=0;i<face->nb_sommets;i++)
+    {
+      //signe=equ.x*face->sommets[i].x+equ.y*face->sommets[i].y+
+      //equ.z*face->sommets[i].z+equ.t;
+      signe=pscal3d(equ,face->sommets[i])+equ.t;
+      printf("i=%d x=%g y=%g z=%g signe=%g\n",i,
+	     face->sommets[i].x,face->sommets[i].y,
+	     face->sommets[i].z,signe);
+      if(!INTER(signe,-PRECIS2,PRECIS2))
+	{
+      if(vers_obs)
+	{ // on veut etre du meme cote de l'observateur
+	  if(!meme_signe(espace_vers_obs,signe,PRECIS2/*0.0*/))
+	    {
+	      printf("pas meme signe0 %g\n",PRECIS2);
+	      return 0;
+	    }
+	}
+      else
+	{ // on veut etre de l'autre cote de l'observateur
+	  if(meme_signe(espace_vers_obs,signe,PRECIS2/*0.0*/))
+	    {
+	      printf("pas meme signe1 %g\n",PRECIS2);
+	      return 0;
+	    }
+	}
+	}
+    }
+  printf("autre fin\n");
+  
+  return 1;
+}
+
+/*
+retourne 1 ssi le segement p1-p2
+coupe le segement s1-s2
+*/
+int intersection3d(POINT *p1,POINT *p2,POINT *s1,POINT *s2)
+{
+  double maxx1,maxy1,minx1,miny1;
+  double maxx2,maxy2,minx2,miny2;
+  double a,b;
+  
+  printf("inter3d\n");
+  // calcul du rectangle englobant le 1er segment
+  if(p1->x>p2->x)
+    {
+      maxx1=p1->x;
+      minx1=p2->x;
+    }
+  else
+    {
+      maxx1=p2->x;
+      minx1=p1->x;
+    }
+  
+  if(p1->y>p2->y)
+    {
+      maxy1=p1->y;
+      miny1=p2->y;
+    }
+  else
+    {
+      maxy1=p2->y;
+      miny1=p1->y;
+    }
+  // calcul du rectangle englobant le 2eme segment
+  if(s1->x>s2->x)
+    {
+      maxx2=s1->x;
+      minx2=s2->x;
+    }
+  else
+    {
+      maxx2=s2->x;
+      minx2=s1->x;
+    }
+  
+  if(s1->y>s2->y)
+    {
+      maxy2=s1->y;
+      miny2=s2->y;
+    }
+  else
+    {
+      maxy2=s2->y;
+      miny2=s1->y;
+    }
+  
+  if/*( ( ((minx1<=maxx2)&&(maxx2<=maxx1)) || ((minx1<=minx2)&&(minx2<=maxx1)) )
+      &&( ( 
+	((miny1<=miny2)&&(miny2<=maxy1)) ||
+	((miny1<=maxy2)&&(maxy2<=maxy1)) )))*/
+    (INTER(maxx2,minx1,maxx1)||INTER(minx2,minx1,maxx1)||
+     INTER(maxx1,minx2,maxx2)||INTER(minx1,minx2,maxx2))
+    { // les rectangles englobants se croisent
+      // calcul du produit croise (s1-p1)*(p2-p1)
+      a=(s1->x-p1->x)*(p2->y-p1->y)-(p2->x-p1->x)*(s1->y-p1->y);
+      // calcul du produit croise (s2-p1)*(p2-p1)
+      b=(s2->x-p1->x)*(p2->y-p1->y)-(p2->x-p1->x)*(s2->y-p1->y);
+      if(meme_signe(a,b,PRECIS2/*0.0*/))
+	return 0; // il n'y a pas intersection
+      else
+	return 1; // intersection
+    }
+  else
+    return 0; // pas d'intersection
+}
+
+/*
+retourne 1 ssi le point est dans le polygonne
+*/
+int dans_poly(POINT *point,FACE2 *poly)
+{
+  POINT p1,p2;
+  int i,j;
+  double sg,sg2;
+  
+  p1.x=point->x-poly->sommets[0].x;
+  p1.y=point->y-poly->sommets[0].y;
+  p1.z=point->z-poly->sommets[0].z;
+  p2.x=poly->sommets[1].x-poly->sommets[0].x;
+  p2.y=poly->sommets[1].y-poly->sommets[0].y;
+  p2.z=poly->sommets[1].z-poly->sommets[0].z;
+  sg=pscal3d(p1,p2);
+  
+  for(i=1;i<poly->nb_sommets-1;i++)
+    {
+      p1.x=point->x-poly->sommets[i].x;
+      p1.y=point->y-poly->sommets[i].y;
+      p1.z=point->z-poly->sommets[i].z;
+      p2.x=poly->sommets[i+1].x-poly->sommets[i].x;
+      p2.y=poly->sommets[i+1].y-poly->sommets[i].y;
+      p2.z=poly->sommets[i+1].z-poly->sommets[i].z;
+      sg2=pscal3d(p1,p2);
+      if(!meme_signe(sg,sg2,0.0))
+	return 1;
+    }
+  
+  p1.x=point->x-poly->sommets[i].x;
+  p1.y=point->y-poly->sommets[i].y;
+  p1.z=point->z-poly->sommets[i].z;
+  p2.x=poly->sommets[0].x-poly->sommets[i].x;
+  p2.y=poly->sommets[0].y-poly->sommets[i].y;
+  p2.z=poly->sommets[0].z-poly->sommets[i].z;
+  sg2=pscal3d(p1,p2);
+  if(!meme_signe(sg,sg2,0.0))
+    return 1;
+  
+  // le point n'est pas dans le polygonne
+  return 0;
+}
+
+/*
+retourne 1 ssi les faces p1 et p2
+ont des projections disjointes
+*/
+int projection_disjointe(FACE2 *p1,FACE2 *p2)
+{
+  POINT barycentre;
+  int i,j;
+  POINT v1,v2,v3,*v4,*v5,*v6,*v7;
+  double s1,s2;
+  
+  printf("proj disj\n");
+  // recheche si les 2 faces se coupent
+  for(i=0;i<p1->nb_sommets;i++)
+    {
+      //printf("project i=%d\n",i);
+      v4=&(p1->sommets[i]);
+      transforme_point(v4);
+      if(i==p1->nb_sommets-1)
+	v5=&(p1->sommets[0]);
+      else
+	v5=&(p1->sommets[i+1]);
+      transforme_point(v5);
+      for(j=0;j<p2->nb_sommets;j++)
+	{
+	  //printf("proj j=%d\n",j);
+	  v6=&(p2->sommets[i]);
+	  transforme_point(v6);
+	  if(j==p2->nb_sommets-1)
+	    v7=&(p2->sommets[0]);
+	  else
+	    v7=&(p2->sommets[i+1]);
+	  transforme_point(v7);
+	  if((dans_poly(v6,p1))||(intersection3d(v4,v5,v6,v7)))
+	    { // ils se coupent
+	      return 0;
+	    }
+	}
+    }
+  // ils sont disjoints
+  return 1;
+}
+
+/* retourne le produit vectoriel de u,v */
+POINT pvect3d(POINT u,POINT v)
+{
+  POINT res;
+  
+  res.x=u.y*v.z-v.y*u.z;
+  res.y=u.z*v.x-v.z*u.x;
+  res.z=u.x*v.y-v.x*u.y;
+  
+  return res;
+}
+
+/*
+retourne l'equation du plan a*x+b*y+c*z+d=0
+qui contient la face "face"
+x=a, y=b, z=c, t=d
+si le plan est indefini, retourne (0,0,0,0)
+*/
+POINT equ_plan(FACE2 *face)
+{
+  POINT p1,p2,p3,res;
+  int i;
+  
+  /*
+  printf("equation du plan:\n");
+  
+  printf("s[0]: x=%g y=%g z=%g\n",
+	 face->sommets[0].x,face->sommets[0].y,face->sommets[0].z);
+  
+  printf("s[1]: x=%g y=%g z=%g\n",
+	 face->sommets[1].x,face->sommets[1].y,face->sommets[1].z);
+  
+  printf("s[2]: x=%g y=%g z=%g\n",
+	 face->sommets[2].x,face->sommets[2].y,face->sommets[2].z);
+  */
+  p1.x=face->sommets[1].x-face->sommets[0].x;
+  p1.y=face->sommets[1].y-face->sommets[0].y;
+  p1.z=face->sommets[1].z-face->sommets[0].z;
+  // recherche d'un vecteur non colineaire
+  for(i=2;i<face->nb_sommets;i++)
+    {
+      i++;
+      p2.x=face->sommets[i].x-face->sommets[0].x;
+      p2.y=face->sommets[i].y-face->sommets[0].y;
+      p2.z=face->sommets[i].z-face->sommets[0].z;
+      p3=pvect3d(p1,p2);
+      if((p3.x!=0.0)||(p3.y!=0.0)||(p3.z!=0.0))
+	{ // p1 et p2 ne sont pas colineaires
+	  break;
+	}
+    }
+  //printf("");
+  /*STOP(i<face->nb_sommets,
+    printf("Erreur:nb_sommets(%d)<=i(%d)",face->nb_sommets,i));*/
+  if(i>=face->nb_sommets)
+    {// le plan est indefini
+      res.x=0.0;res.y=0.0;res.z=0.0;res.t=0.0;
+      return res;
+    }
+  res.x=p3.x;
+  res.y=p3.y;
+  res.z=p3.z;
+  res.t=-pscal3d(p3,face->sommets[0]);
+  
+  printf("equ: x=%g y=%g z=%g t=%g\n",res.x,res.y,res.z,res.t);
+  /*
+  STOP(INTER(res.x*face->sommets[0].x+res.y*face->sommets[0].y+
+	     res.z*face->sommets[0].z+res.t,-PRECIS,PRECIS),
+       printf("l'equation du plan est fausse(x=%g y=%g z=%g)\n",
+	      face->sommets[0].x,face->sommets[0].y,face->sommets[0].z));
+  
+  STOP(INTER(res.x*face->sommets[1].x+res.y*face->sommets[1].y+
+	     res.z*face->sommets[1].z+res.t,-PRECIS,PRECIS),
+       printf("l'equation du plan est fausse(x=%g y=%g z=%g)\n",
+	      face->sommets[1].x,face->sommets[1].y,face->sommets[1].z));
+  
+  STOP(INTER(res.x*face->sommets[2].x+res.y*face->sommets[2].y+
+	     res.z*face->sommets[2].z+res.t,-PRECIS,PRECIS),
+       printf("l'equation du plan est fausse(x=%g y=%g z=%g)\n",
+	      face->sommets[2].x,face->sommets[2].y,face->sommets[2].z));
+  */
+  /*
+  for(i=0;i<face->nb_sommets;i++)
+    { // test si c'est correcte
+      STOP(INTER(res.x*face->sommets[i].x+res.y*face->sommets[i].y+
+	     res.z*face->sommets[i].z+res.t,-PRECIS,PRECIS),
+       printf("l'equation du plan est fausse(x=%g y=%g z=%g i=%d)\n",
+	      face->sommets[i].x,face->sommets[i].y,face->sommets[i].z,i));
+    }
+  */
+  
+  //printf("fin equation du plan\n");
+  return res;
+}
+
+// retourne 1 ssi P est derriere S
+int ordre_correcte(FACE2 *P,FACE2 *S)
+{
+  STOP(P!=NULL,printf("err"));
+  STOP(P->sommets!=NULL,printf("err"));
+  STOP(S!=NULL,printf("err"));
+  STOP(S->sommets!=NULL,printf("err"));
+  
+  
+  if(disjoint(S,P))
+    {
+      printf("disj==1\n");
+      return 1;
+    }
+  else if(autre_cote(P,S,0))
+    {
+      printf("autre cote1==1\n");
+      return 1;
+    }
+  else if(autre_cote(S,P,1))
+    {
+      printf("autre cote 2==1\n");
+      return 1;
+    }
+  else if(projection_disjointe(P,S))
+    {
+      printf("proj disj==1\n");
+      return 1;
+    }
+  else
+    {
+      printf("pas correcte\n");
+      return 0;
+    }
+}
+
+/* echange P et S */
+void echange(FACE2 *P,FACE2 *S)
+{
+  FACE2 tmp;
+  
+  tmp=*P;
+  *P=*S;
+  *S=tmp;
+}
+
+/*
+ ajoute le point p a la liste de point liste
+ a la fin et retourne la liste
+ taille contient le nombre d'element avant l'ajout
+ (il est mis a jour)
+*/
+POINT *ajoute_point(POINT *liste,int *taille,POINT *p)
+{
+  POINT *tmp;
+  
+  if((liste==NULL)&&(*taille!=0))
+    {
+      printf("Erreur:liste NULL et taille non nulle\n");
+      getchar();
+      return NULL;
+    }
+  (*taille)++;
+  //liste=(POINT*)realloc(liste,(*taille)*sizeof(POINT));
+  tmp=malloc((*taille)*sizeof(POINT));
+  if(liste!=NULL)
+    {
+      memcpy(tmp,liste,((*taille)-1)*sizeof(POINT));
+      free(liste);
+    }
+  liste=tmp;
+  liste[(*taille)-1]=*p;
+  
+  return liste;
+}
+
+// a revoir
+/*
+calcul le point intersection entre le plan
+et le vecteur definit pas les 2 points p1-p2
+ce point doit exister
+*/
+POINT intersection_plan_droite(POINT *plan, POINT *p1, POINT *p2)
+{
+  POINT p,res;
+  double q,s,x;
+  
+  // calcul dans q du vecteur directeur p1-p2
+  p.x=p2->x-p1->x;
+  p.y=p2->y-p1->y;
+  p.z=p2->z-p1->z;
+  
+  // simplification de l'equation a resoudre
+  q=pscal3d(*plan,p);
+  if(q==0.0)
+    {
+      printf("Erreur: colineaire\n");
+      getchar();
+      exit(1);
+      return;
+    }
+  s=plan->t+p1->x+p1->y+p1->z;
+  
+  // maintenat, il faut resoudre q*x+s=0 avec x comme inconnue
+  x=-s/q;
+  
+  // calcul du point d'intersection
+  res.x=x*p.x+p1->x;
+  res.y=x*p.y+p1->y;
+  res.z=x*p.z+p1->z;
+  
+  return res;
+}
+
+/* 
+insert dans la liste de faces liste_faces
+les 2 faces de P apres le decoupage par le
+plan contenant la face S
+taille est le nombre d'element de liste_faces
+*/
+FACE2 *decoupe(FACE2 *liste_faces,int no,FACE2 *P,FACE2 *S,int taille)
+{
+  POINT equ,*l1=NULL,*l2=NULL,*p,inter;
+  int i,nb_l1,nb_l2,sg_l1,sg_l2,couleur,j,inter_oui=0;
+  double signe,dernier,tmp;
+  FACE2 *liste_faces2;
+  double xmin1,xmax1,ymin1,ymax1,zmin1,zmax1;
+  double xmin2,xmax2,ymin2,ymax2,zmin2,zmax2;
+  
+  //return liste_faces;
+  
+  STOP(liste_faces!=NULL,printf("err"));
+  STOP(P!=NULL,printf("err"));
+  STOP(S!=NULL,printf("err"));
+  STOP(taille>0,printf("err"));
+  STOP(INTER(no,0,taille),printf("err"));
+  STOP(&(liste_faces[no])==P,printf("err"));
+  
+  STOP(P->sommets!=NULL,printf("err"));
+  equ=equ_plan(S);
+  STOP(equ.x!=0.0&&equ.y!=0.0&&equ.z!=0.0,printf("plan indefini\n"););
+  if(equ.z==0.0&&equ.y==0.0&&equ.z==0.0)
+    {
+      //return
+    }
+  p=&(P->sommets[0]);
+  nb_l1=0;nb_l2=0;
+  couleur=P->couleur;
+  printf("MP1\n");
+  l1=ajoute_point(l1,&nb_l1,p);
+  printf("MP2\n");
+  STOP(l1!=NULL,printf("err"));
+  //STOP(,printf("err"));
+  STOP(l1[0].x==p->x,printf("err"));
+  STOP(nb_l1==1,printf("err"));
+  STOP(l2==NULL&&nb_l2==0,printf("err"));
+  STOP(!autre_cote(P,S,0),printf("err0"));
+  STOP(!autre_cote(S,P,1),printf("err1"));
+  signe=equ.x*l1[0].x+equ.y*l1[0].y+equ.z*l1[0].z+equ.t;
+  sg_l1=(int)signe;
+  printf("equ=%g*x+%g*y+%g*z+%g=0\n",equ.x,equ.y,equ.z,equ.t);
+  printf("x=%g y=%g z=%g signe=%g %d\n",l1[0].x,l1[0].y,l1[0].z,signe,sg_l1);
+  sg_l2=-sg_l1;
+  xmin1=xmax1=p[0].x;
+  ymin1=ymax1=p[0].y;
+  zmin1=zmax1=p[0].z;
+  for(i=1;i<liste_faces[no].nb_sommets;i++)
+    {
+      printf("decoupe i=%d\n",i);
+      dernier=signe;
+      STOP(INTER(i-1,0,nb_l1-1),printf("err"));
+      STOP(INTER(i,0,liste_faces[no].nb_sommets-1),printf("err"));
+      signe=equ.x*l1[i].x+equ.y*l1[i].y+equ.z*l1[i].z+equ.t;
+      //signe=equ.x*p[i].x+equ.y*p[i].y+equ.z*p[i].z+equ.t;
+      //signe=equ.x*P->sommets[i].x+equ.y*P->sommets[i].y+equ.z*P->sommets[i].z+equ.t;
+      printf("A1(%g %d %d )\n",signe,sg_l1,sg_l2);
+      if(!meme_signe((double)dernier,signe,0.0))
+	{ //il y a intersection entre le plan et le segemnt
+	  // defini par le point precedent et le point actuel
+	  printf("A2\n");
+	  inter_oui=1;
+	  // calcul du point d'intersection
+	  //inter=intersection_plan_droite(&equ,&(P->sommets[i-1]),&(P->sommets[i]));
+	  inter=intersection_plan_droite(&equ,&(P->sommets[i-1]),&(p[i]));
+	  printf("A10\n");
+	  // ajout du point d'intersection au 2 faces
+	  //l1=ajoute_point(l1,&nb_l1,&(p[i]));printf("A11\n");
+	  //l2=ajoute_point(l2,&nb_l2,&(p[i]));printf("A12\n");
+	  l1=ajoute_point(l1,&nb_l1,&(inter));printf("A11\n");
+	  l2=ajoute_point(l2,&nb_l2,&(inter));printf("A12\n");
+	}
+      printf("A3\n");
+      if(meme_signe((double)sg_l1,signe,0.0))
+	{
+	  printf("A4\n");
+	  // ajout du point dans l1
+	  l1=ajoute_point(l1,&nb_l1,&(p[i]));
+	  // calcul du rectangle englobant de la liste de point l1
+	  if(p[i].x>xmax1) xmax1=p[i].x;
+	  if(p[i].x<xmin1) xmin1=p[i].x;
+	  if(p[i].y>ymax1) ymax1=p[i].y;
+	  if(p[i].y<ymin1) ymin1=p[i].y;
+	  if(p[i].z>zmax1) zmax1=p[i].z;
+	  if(p[i].z<zmin1) zmin1=p[i].z;
+	}
+      else
+	{
+	  printf("A5\n");
+	  // calcul du rectangle englobant de la liste de point l2
+	  if(l2==NULL)
+	    {
+	      xmin2=xmax2=p[i].x;
+	      ymin2=ymax2=p[i].y;
+	      zmin2=zmax2=p[i].z;
+	    }
+	  else
+	    {
+	      if(p[i].x>xmax2) xmax2=p[i].x;
+	      if(p[i].x<xmin2) xmin2=p[i].x;
+	      if(p[i].y>ymax2) ymax2=p[i].y;
+	      if(p[i].y<ymin2) ymin2=p[i].y;
+	      if(p[i].z>zmax2) zmax2=p[i].z;
+	      if(p[i].z<zmin2) zmin2=p[i].z;
+	    }
+	  printf("A6\n");
+	  // ajout du point dans l2
+	  l2=ajoute_point(l2,&nb_l2,&(p[i]));
+	  STOP(l2!=NULL,printf("err"));
+	  printf("A7\n");
+	}
+      printf("A8\n");
+    }
+  printf("fin boucle decoupe\n");
+  printf("nb_l2=%d nb_l1=%d\n",nb_l2,nb_l1);
+  STOP(inter_oui==1,
+       printf("Il n'y a pas eut d'intersection\n");
+       affiche_faces(liste_faces,taille);
+       for(i=0;i<taille-1;i++)
+       {
+	 if(ordre_correcte(&(liste_faces[i]),&(liste_faces[i+1])))
+	   printf("faces %d et %d correctes\n",i,i+1);
+	 else
+	   printf("faces %d et %d incorrectes\n",i,i+1);
+       }
+       //printf("ordre=%d\n",ordre_correcte);
+       );
+  STOP(l2!=NULL,printf("err"));
+  STOP(l1!=NULL,printf("err"));
+  
+  // effacement de la case a remplacer
+  free(liste_faces[no].sommets);
+  liste_faces[no].sommets=NULL;
+  STOP(liste_faces!=NULL,printf("err"));
+  printf("A9(%p,%d)\n",liste_faces,taille);
+  // ajout des 2 faces a la place de P
+  //liste_faces=(FACE2*)realloc(liste_faces,(taille+1)*sizeof(FACE2));
+  liste_faces2=(FACE2*)malloc((taille+1)*sizeof(FACE2));
+  //getchar();
+  //free();
+  memcpy(liste_faces2,liste_faces,(taille+1)*sizeof(FACE2));
+  free(liste_faces);
+  liste_faces=liste_faces2;
+  printf("A9\n");
+  // on decale les cases apres no d'une case 
+  memmove(&(liste_faces[no+2]),&(liste_faces[no+1]),
+	  (taille-no)*sizeof(POINT));
+  printf("A9\n");
+  //*************************************
+  //if(xmin1==)
+
+    //**********************************
+  // on met l1 le plus petit zmin et l2 le plus grand
+  
+  if(zmin1>zmin2) 
+    {
+      p=l2;
+      l2=l1;
+      l1=p;
+      tmp=xmin2;
+      xmin2=xmin1;
+      xmin1=tmp;
+      tmp=xmax2;
+      xmax2=xmax1;
+      ymax1=tmp;
+      tmp=ymin2;
+      ymin2=ymin1;
+      ymin1=tmp;
+      tmp=ymax2;
+      ymax2=ymax1;
+      ymax1=tmp;
+      tmp=zmin2;
+      zmin2=zmin1;
+      zmin1=tmp;
+      tmp=zmax2;
+      zmax2=zmax1;
+      zmax1=tmp;
+      i=nb_l1;
+      nb_l1=nb_l2;
+      nb_l2=i;
+    }
+   
+  // insertion de l1
+  liste_faces[no].sommets=l1;printf("A9\n");
+  liste_faces[no].nb_sommets=nb_l1;printf("A9\n");
+  liste_faces[no].x0=xmin1;printf("A9\n");
+  liste_faces[no].y0=ymin1;printf("A9\n");
+  liste_faces[no].x1=xmax1;printf("A9\n");
+  liste_faces[no].y1=ymax1;printf("A9\n");
+  liste_faces[no].zmin=zmin1;
+  liste_faces[no].zmax=zmax1;
+  liste_faces[no].couleur=couleur;
+  
+  // insertion de l2
+  for(i=1;i+no<taille-1;i++)
+    {
+      if(liste_faces[no+i+1].zmin>zmin2)
+	{
+	  break;
+	} 
+    } 
+  
+  if((i+no==taille-1)&&(liste_faces[no+i].zmin>zmin2))
+    j=taille-2-no; // l2 doit etre mis a la fin du tableau
+  else
+    j=i-1;
+  
+  // on decale les elements du tableau
+  if(i>1)
+    memmove(&(liste_faces[no+1]),&(liste_faces[no+2]),
+	    (j)*sizeof(POINT));
+ 
+  //i=1;
+  liste_faces[no+i].sommets=l2;printf("A9\n");
+  liste_faces[no+i].nb_sommets=nb_l2;printf("A9\n");
+  liste_faces[no+i].x0=xmin2;printf("A9\n");
+  liste_faces[no+i].y0=ymin2;printf("A9\n");
+  liste_faces[no+i].x1=xmax2;printf("A9\n");
+  liste_faces[no+i].y1=ymax2;printf("A9\n");
+  liste_faces[no+i].zmin=zmin2;
+  liste_faces[no+i].zmax=zmax2;
+  liste_faces[no+i].couleur=couleur;
+  
+  STOP(liste_faces[no].sommets!=NULL,printf("err"));
+  STOP(liste_faces[no+1].sommets!=NULL,printf("err"));
+  
+  return liste_faces;
+}
+
+void affiche_faces(FACE2 *liste,int nb)
+{
+  FACE2 *face;
+  int i,j;
+  POINT *p;
+  
+  //return;
+  
+  printf("Affichage des faces (peintre) :\n");
+  for(i=0;i<nb;i++)
+    {
+      face=&(liste[i]);
+      printf("face %d (%d sommets) ",face->no_face,face->nb_sommets);
+      printf("xo=%g yo=%g x1=%g y1=%g zmin=%g zmax=%g\n",face->x0,face->y0,
+	     face->x1,face->y1,face->zmin,face->zmax);
+      p=face->sommets;
+      for(j=0;j<face->nb_sommets;j++,p++)
+	{
+	  printf("%d) x=%g y=%g z=%g t=%g \n",j,p->x,p->y,p->z,p->t);
+	}
+      printf("\n");
+    }
+  printf("fin affichage faces\n");
+}
+
+// visualise en utilisant l'algorithme du peintre
+void visual_peintre(OBJET *objet)
+{
+  FACE2 *liste_faces,*face,*P,*S,tmp,*tmp2;
+  double x0,xt,y0,yt,zt,c; 
+  int i,j,*p,*p2,dernier,p_mal_place,taille,k,fin;
+  FACE *faso;
+  POINT *p3,p1,p4;
+  const int iter=100;
+  
+  if(objet==NULL)
+    return;
+  
+  printf("affichage peintre:\n");
+  // creation dans liste_faces de la liste des faces
+  liste_faces=(FACE2*)calloc(objet->nf,sizeof(FACE2));
+  printf("coucou5\n");
+  face=liste_faces;
+  faso=objet->faso;
+  for(i=0;i<objet->nf;i++,face++)
+    {
+      //printf("coucou6(%p,%p )\n",faso,faso[1]);
+      //face=&(liste_faces[i]);
+      //printf("coucou8(%p,%p,%p)\n",objet->faso,liste_faces,(objet->faso)[0]);
+      p=faso[i+1];
+      //printf("coucou9(%p,%d)\n",p,p[0]);
+      face->x0=face->x1=objet->so[p[0]-1].x;
+      //printf("coucou10\n");
+      face->y0=face->y1=objet->so[p[0]-1].y;
+      //printf("coucou11\n");
+      face->zmin=face->zmax=objet->so[p[0]-1].z;
+      //printf("coucou12\n");
+      face->no_face=i;
+      
+      
+      //face->nb_face=0;
+      face->sommets=(POINT*)calloc(5,sizeof(POINT));
+      STOP(face->sommets!=NULL,printf("err"));
+      //p2=face->sommets;
+      face->sommets[0]=objet->so[p[0]-1];
+      //face->face=objet->faso;
+      //printf("coucou1\n");
+      for(j=1;p[j]!=p[0];j++)
+	{
+	  printf("coucou7(%d,%d,%d,%d)\n",i,j,objet->nf,p[j]);
+	  STOP(INTER(p[j]-1,0,objet->ns),printf("err"));
+	  STOP(j>=0,printf("err"));
+	  //p=objet->faso[i];
+	  xt=objet->so[p[j]-1].x;
+	  yt=objet->so[p[j]-1].y;
+	  zt=objet->so[p[j]-1].z;
+	  if(xt<face->x0) face->x0=xt;
+	  if(xt>face->x1) face->x1=xt;
+	  if(yt<face->y0) face->y0=yt;
+	  if(yt>face->y1) face->y1=yt;
+	  if(zt<face->zmin) face->zmin=zt;
+	  if(zt>face->zmax) face->zmax=zt;
+	  //p2=face->sommets;
+	  //p2
+	  //face->nb_face++;
+	  //face->sommets=(POINT*)realloc(face->sommets,
+	  //			face->nb_face*sizeof(POINT));
+	  //face->sommets=p3;
+	  face->sommets[j]=objet->so[p[j]-1];
+	}
+      //p2=face->sommets;
+      //p2
+      face->sommets[j]=objet->so[p[j]-1];
+      face->nb_sommets=j;
+      //printf("coucou2\n");
+      //*****************************************************************************
+      // calcul du vecteur normal a la surface
+      STOP(INTER(p[1]-1,0,objet->ns-1),printf("%d,%d<0",p[1]-1,objet->ns-1););
+      STOP(INTER(p[0]-1,0,objet->ns-1),printf("%d<0",p[0]-1););
+      STOP(INTER(j-1,0,3),printf("%d<0",j-1););
+      STOP(INTER(p[j-1]-1,0,objet->ns-1),printf("%d<0",p[j-1]-1););
+      //STOP(INTER(p[objet->nf-2]-1,0,objet->ns-1),
+      //   printf("%d %d %d<01",  p[objet->nf-2]-1,objet->nf-2,p[objet->nf-1]-1));
+      //STOP(INTER(p[objet->nf-1]-1,0,objet->ns-1),
+      //   printf("%d %d %d<02",p[objet->nf-1]-1,objet->nf-1,p[objet->nf-1]-1));
+      
+  p1.x=objet->so[p[1]-1].x-objet->so[p[0]-1].x;
+  p1.y=objet->so[p[1]-1].y-objet->so[p[0]-1].y;
+  p1.z=objet->so[p[1]-1].z-objet->so[p[0]-1].z;
+  
+  p4.x=objet->so[p[0]-1].x-objet->so[p[j-1]-1].x;
+  p4.y=objet->so[p[0]-1].y-objet->so[p[j-1]-1].y;
+  p4.z=objet->so[p[0]-1].z-objet->so[p[j-1]-1].z;
+  
+  printf("x[%d]=%g x[%d]=%g\n",p[1]-1,objet->so[p[1]-1].x,
+	 p[0]-1,objet->so[p[0]-1].x);
+  /*printf("x2[0]=%g x2d[%d]=%g\n",objet->so[p[0]-1].x,objet->nf-1,
+	 objet->so[p[objet->nf-1]-1].x);
+       */
+  printf("p1.x=%g p1.y=%g p1.z=%g\n",p1.x,p1.y,p1.z);
+  printf("p4.x=%g p4.y=%g p4.z=%g\n",p4.x,p4.y,p4.z);
+  p1=pvect3d(p1,p4);
+  printf("M p1.x=%g p1.y=%g p1.z=%g\n",p1.x,p1.y,p1.z);
+  STOP(norme3d(&p1)>0.0,printf("err"));
+  //printf("");
+  // calcul du vecteur de la source ponctuel
+  p4.x=0;
+  p4.y=0;
+  p4.z=30;
+  printf("zo=%g\n",zo);
+  
+  // calcul du cosinus entre ces 2 vecteurs
+  c=((double)(p1.x*p4.x+p1.y*p4.y+p1.z*p4.z))/
+    (norme3d(&p1)*norme3d(&p4));
+  printf("c************n p1=%g n p2=%g c=%g\n",norme3d(&p1),norme3d(&p4),c);
+  if(c<0) c*=-1;
+  
+  c=1.0-c;
+  STOP(INTER(c,0,M_PI_2),printf("err"));
+  face->couleur=(int)( ((double)nb_gris()-1.0)*((double)c/(double)M_PI_2) );
+  
+  printf("coul=%d\n",face->couleur);
+  STOP(INTER(face->couleur,BLANC,NOIR),printf("err"));
+      
+  //face->couleur=0;
+      //**********************************************************
+      
+    }
+  printf("coucou3\n");
+  fflush(stdin);fflush(stdout);
+  affiche_faces(liste_faces,objet->nf);
+  fflush(stdin);
+  getchar();
+  // trie des faces suivant les z decroissants
+  trie(liste_faces,objet->nf);
+  printf("coucou4 trie\n");
+  affiche_faces(liste_faces,objet->nf);
+  fflush(stdin);
+  getchar();
+  // affichage des faces
+  /*for(i=0;i<objet->nf;i++)
+    {
+      printf("face %d(%d):",liste_faces[i].no_face,i);
+      printf("zmin=%g\nsommets(%d):",liste_faces[i].zmin,
+	     liste_faces[i].nb_sommets);
+      for(j=0;j<liste_faces[i].nb_sommets;j++)
+	{
+	  printf("(%g,%g,%g)",liste_faces[i].sommets[j].x,
+		 liste_faces[i].sommets[j].y,
+		 liste_faces[i].sommets[j].z);
+	}
+      printf("!\n");
+    }
+       */
+  printf("coucou\n");
+  //dernier=objet->nf-1;
+  dernier=0;
+  taille=objet->nf; // contient le nombre de faces dans liste_faces
+  //while(dernier>=0)
+  printf("debut boucle peintre\n");
+  while((dernier<taille))//&&(1==0))
+    {
+      printf("dernier=%d**********************************\n",dernier);
+      P=&(liste_faces[dernier]);
+      S=&(liste_faces[dernier+1]);
+      if(P->zmax<=S->zmin)
+	{ // P est correctement placer
+	  //trace_face(objet,P);
+	  dernier++;
+	}
+      else
+	{ // peut-etre que P est mal place
+	  p_mal_place=0;fin=0;
+	  //while(fin!=1)
+	  do {
+	      printf("fin=%d\n",fin);
+	      p_mal_place=0;
+	      for(j=dernier+1;j<taille;j++)
+		{
+		  printf("j=%d*******************************\n",j);
+		  S=&(liste_faces[j]);
+		  if(S->zmin<P->zmax) 
+		    {
+		      STOP(S!=NULL,printf("err(j=%d)",j));
+		      STOP(P!=NULL,printf("err(j=%d)",j));
+		      STOP(S->sommets!=NULL,printf("err(j=%d %d )",j,S->nb_sommets));
+		      STOP(P->sommets!=NULL,printf("err(j=%d)",j));
+		      if((!ordre_correcte(P,S)))
+			{
+			  // echange du contenu dans le tableau de P et de S
+			  printf("AbC2\n");
+			  printf("avant echange:\n");
+			  affiche_faces(liste_faces,taille);
+			  echange(P,S);
+			  printf("apres echange(%d %d):\n",dernier,j);
+			  affiche_faces(liste_faces,taille);
+			  //recheche si c'est bien place
+			  p_mal_place=0;
+			  
+			  for(k=dernier+1;k<taille;k++)
+			    {
+			      printf("k=%d\n",k);
+			      S=&(liste_faces[k]);
+			      if(S->zmin<P->zmax)
+				{
+				  STOP(S!=NULL,printf("err(k=%d)",k));
+				  STOP(P!=NULL,printf("err(k=%d)",k));
+				  STOP(S->sommets!=NULL,printf("err(k=%d)",k));
+				  STOP(P->sommets!=NULL,printf("err(k=%d)",k));
+				  if(!ordre_correcte(P,S))
+				    { // Ils sont toujours mals places
+				      printf("toujours mal place!!!!!!!!!!!!!!!!!!!!\n");
+				      p_mal_place=1;
+				      /*
+				      affiche_faces(liste_faces,taille);
+				      exit(1);
+				      */
+				      break;
+				    }
+				}
+			      /*else
+				{
+				  break;
+				  }*/
+			    }
+			  
+			  if(p_mal_place==1)
+			    {// il faut decouper P
+			      printf("decoupe%d\n",k);
+			      liste_faces=decoupe(liste_faces,dernier,P,S,taille);
+			      printf("fin decoupe\n");
+			      taille++;
+			      //p_mal_place=0;
+			      affiche_faces(liste_faces,taille);
+			      //trie(liste_faces+dernier,taille-dernier);
+			      break;
+			    }
+			}
+		    }
+		  else
+		    {
+		      break;
+		    }
+
+                    printf("AbC\n");
+		}
+	      fin++;
+	      break;
+	    } while((p_mal_place==1)&&(fin<iter));
+	  if(p_mal_place==0)
+	    {// P et bien place
+	      //trace_face(objet,P);
+	      dernier++;
+	    }
+	  if(fin>=iter)
+	    printf("Attention! plus de %d iterations\n",iter);
+	  
+	  //if(j<0)
+	  //dernier++;
+	}
+      
+      }
+  printf("fin de boucle peintre\n");
+  
+  initialiser_affichage2(objet,liste_faces,taille);
+  
+  // affichage des faces suivant l'ordre
+  for(i=0;i<taille;i++)
+    {
+      P=&(liste_faces[i]);
+      trace_face(objet,P);
+    }
+  
+  printf("fin du peintred(%p,%d):\n",liste_faces,taille);
+  affiche_faces(liste_faces,taille);
+  fflush(stdin);
+  getchar();
+  
+  // effacement de la liste des faces
+  free(liste_faces->sommets);
+  free(liste_faces);
+  printf("fin affichage peintre\n");
+}
+
+OBJET *lecture_objet(char *nom_fichier)
+{
+  FILE *fd;
+  OBJET *obj;
+  POINT *p;
+  ARETE *a;
+  FACE *fso,*far;
+  int i,j,no,a1,a2,a3,a4,no2;
+  double p1,p2,p3,p4;
+
+  fd=fopen(nom_fichier,"r");
+  obj=(OBJET*)malloc(sizeof(OBJET));
+  /* lecture des sommets */
+  fscanf(fd,"%d",&no);
+  obj->ns=no;
+  obj->so=(POINT*)calloc(no,sizeof(POINT));
+  obj->tso=(POINT*)calloc(no,sizeof(POINT));
+  for(i=0;i<no;i++)
+    {
+      fscanf(fd,"%lf %lf %lf %lf",&p1,&p2,&p3,&p4);
+      (obj->so)[i].x=p1;
+      (obj->so)[i].y=p2;
+      (obj->so)[i].z=p3;
+      (obj->so)[i].t=p4;
+    }
+  /* lecture des aretes */
+  fscanf(fd,"%d",&no);
+  obj->na=no;
+  obj->ar=(ARETE*)calloc(no,sizeof(ARETE));
+  for(i=0;i<no;i++)
+    {
+      fscanf(fd,"%d %d %d",&a1,&a2,&a3);
+      (obj->ar)[i].nor=a1;
+      (obj->ar)[i].nex=a2;
+      (obj->ar)[i].nat=a3;
+    }
+
+  /* lecture des faces faar*/
+  fscanf(fd,"%d %d",&no,&no2);
+  obj->nf=no;
+  obj->faar=(FACE*)calloc(no,sizeof(FACE));
+  for(i=0;i<no;i++)
+    {
+      (obj->faar)[i]=(int*)calloc(no2,sizeof(int));
+      for(j=0;j<no2;j++)
+ {
+   fscanf(fd,"%d", &a1);
+   (obj->faar)[i][j]=a1;
+ }
+    }
+
+  /* lecture des faces faso*/
+  fscanf(fd,"%d %d",&no,&no2);
+  obj->nf=no;
+  obj->faso=(FACE*)calloc(no,sizeof(FACE));
+  for(i=0;i<no;i++)
+    {
+      (obj->faso)[i]=(int*)calloc(no2,sizeof(int));
+      for(j=0;j<no2;j++)
+ {
+   fscanf(fd,"%d", &a1);
+   (obj->faso)[i][j]=a1;
+ }
+    }
+  fclose(fd);
+  return obj;
+}
+
+OBJET *lecture_objet2(char *nom_fichier)
+{
+  FILE *f;
+  char s[50];
+  OBJET *o1,*o2;
+  int i,j,*p1,tmp,debut,k,no,*tmp2,l;
+
+  //printf("124\n");
+  f=fopen(nom_fichier,"r");
+  //printf("1245\n");
+  if(f==NULL)
+    {
+      printf("Erreur: Impossible d'ouvrir le fichier %s\n",nom_fichier);
+      return NULL;
+    }
+
+  //fscanf("#%s",s);
+  fgets(s,sizeof(s),f);
+  //printf("12456\n");
+  if(s[0]!='#')
+    {
+      printf("Erruer0: Il faut que le fichier commence par un #\n");
+      return NULL;
+    }
+  
+  //printf("124567\n");
+  o1=(OBJET*)malloc(sizeof(OBJET));
+  memset(o1,0,sizeof(OBJET));
+  //printf("1245678\n");
+  fscanf(f,"%d %d %d\n",&(o1->ns),&(o1->na),&(o1->nf));
+
+  //printf("ns=%d na=%d nf=%d\n",o1->ns,o1->na,o1->nf);
+  
+  o1->so=(POINT*)calloc(o1->ns,sizeof(POINT));
+  o1->tso=(POINT*)calloc(o1->ns,sizeof(POINT));
+  o1->ar=(ARETE*)calloc(o1->na,sizeof(ARETE));
+  o1->faar=(FACE*)calloc(o1->nf+1,sizeof(FACE));
+  o1->faso=(FACE*)calloc(o1->nf+1,sizeof(FACE));
+  
+  //printf("1245678\n");
+  fgets(s,sizeof(s),f);
+  if(s[0]!='#')
+    {
+      printf("Erreur1: Il faut que la ligne commence par un #\n(%s)\n",s);
+      return NULL;
+    }
+  
+  for(i=0;i<o1->ns;i++)
+    {
+      fscanf(f,"%d %lf %lf %lf %lf\n",&tmp,&((o1->so[i]).x),
+      &((o1->so[i]).y),&((o1->so[i]).z),&((o1->so[i]).t));
+    }
+
+  fgets(s,sizeof(s),f);
+  if(s[0]!='#')
+    {
+      printf("Erruer2: Il faut que la ligne commence par un #\n");
+      return NULL;
+    }
+  
+  for(i=0;i<o1->na;i++)
+    {
+      fscanf(f,"%d %d %d %d\n",&tmp,&(o1->ar[i].nor),
+      &(o1->ar[i].nex),&(o1->ar[i].nat));
+    }
+
+  fgets(s,sizeof(s),f);
+  if(s[0]!='#')
+    {
+      printf("Erruer3: Il faut que la ligne commence par un #1\n");
+      return NULL;
+    }
+
+  //FACES
+  //printf("coucou\n");
+  //lecture faso
+  
+  for(i=0;i<o1->nf;i++)
+    {
+      j=1;
+      fscanf(f,"%d %d",&tmp,&debut);
+      p1=(int*)malloc(1*sizeof(int));
+      p1[0]=debut;
+      do
+	{
+	  fscanf(f,"%d", &k);
+	  j++;
+	  p1=(int *)realloc(p1,(j+0)*sizeof(int));
+	  p1[j-1]=k;
+	  /*
+	    for(l=0;l<j;l++)
+	    printf("p1[%d]=%d\n",l,p1[l]);
+	    printf("\n");
+	  */
+	}
+      while(k!=debut);
+      
+      fscanf(f," \n");
+      (o1->faso)[i+1]=p1;
+      //printf("coucou2\n");
+      //affichage des faces
+      /*
+ //tmp2=(o1->faso)[i];
+ tmp2=p1;
+ j=0;
+ debut=tmp2[j];
+ printf("%d ",i+1);
+ printf("%d ",tmp2[j]);
+ j++;
+ do
+ { 
+ j++;
+ printf("%d ",tmp2[j]);
+ }
+ while(tmp2[j] != debut);
+ printf("\n");
+      */
+    }
+  //printf("coucou3\n");
+  // lecture de faar
+  if(!feof(f))
+    {
+      fgets(s,sizeof(s),f);
+      if(s[0]!='#')
+	{
+	  printf("Erruer: Il faut que la ligne commence par un #2\n");
+	  return NULL;
+	}
+      
+      fscanf(f,"%d\n",&no);
+      for(i=0;i<o1->nf;i++)
+	{
+	  j=1;//printf("coucou6\n");
+	  fscanf(f,"%d",&tmp);
+	  p1=(int*)malloc(no*sizeof(int));
+	  for(j=0;j<no;j++)
+	    {
+	      //printf("coucou7(%d)\n",j);
+	      fscanf(f,"%d", &k);
+	      //printf("k=%d\n",k);
+	      p1[j]=k;
+	    }
+	  //printf("coucou5\n");
+	  fscanf(f,"\n");
+	  (o1->faar)[i]=p1;
+	}
+      //printf("coucou4\n");
+    }
+  
+  fclose(f);
+  
+  return o1;
+}
+
+PT_CTL *points_controles=NULL;
+
+double Cnp(int n,int p)
+{
+  return 0.0;
+}
+
+double B(int n,int p,double t)
+{
+  double res=Cnp(n,p);
+  int i;
+  
+  for(i=0;i<p;i++)
+    res*=t;
+  
+  for(i=0;i<n-p;i++)
+    res*=1-t;
+}
+
+//fonc1
+double fonc_pt_contr1(double u,double v)
+{
+  int i,j;
+  double res=0.0;
+  
+  for(i=0;i<points_controles->nb_ligne;i++)
+    for(j=0;j<points_controles->nb_col;j++)
+      {
+	res+=B(i,points_controles->nb_ligne,u)*
+	  B(j,points_controles->nb_col,v)*
+	  (points_controles->tab)
+	  [i*points_controles->nb_col+j].x;
+      }
+
+  return res;
+}
+
+double fonc_pt_contr2(double u,double v)
+{
+  int i,j;
+  double res=0.0;
+  
+  for(i=0;i<points_controles->nb_ligne;i++)
+    for(j=0;j<points_controles->nb_col;j++)
+      {
+	res+=B(i,points_controles->nb_ligne,u)*
+	  B(j,points_controles->nb_col,v)*
+	  (points_controles->tab)
+	  [i*points_controles->nb_col+j].y;
+      }
+
+  return res;
+  //return v;
+  //return u*sin(v);
+}
+
+double fonc_pt_contr3(double u,double v)
+{
+  int i,j;
+  double res=0.0;
+  
+  for(i=0;i<points_controles->nb_ligne;i++)
+    for(j=0;j<points_controles->nb_col;j++)
+      {
+	res+=B(i,points_controles->nb_ligne,u)*
+	  B(j,points_controles->nb_col,v)*
+	  (points_controles->tab)
+	  [i*points_controles->nb_col+j].z;
+      }
+
+  return res;
+  //return u*u+v*v;
+  //return u*u;
+}
+
+// lecture d'un fichier de points de control
+//PT_CTL *
+void lecture_pt_control(char *nom_fichier)
+{
+  PT_CTL *res=NULL;
+  FILE *f;
+  int i,j;
+  double d1,d2,d3;
+
+  f=fopen(nom_fichier,"r");
+  if(f==NULL)
+    {
+      printf("Erreur: Impossible d'ouvrir le fichier %s\n",nom_fichier);
+      return;
+    }
+//printf("suite0\n");
+  res=(PT_CTL*)malloc(sizeof(PT_CTL));
+  fscanf(f,"%d\n%d\n",&(res->nb_ligne),&(res->nb_col));
+  res->tab=(POINT*)calloc(res->nb_ligne*res->nb_col,sizeof(POINT));
+
+  //printf("suite(%d %d)\n",res->nb_ligne,res->nb_col);
+
+  for(i=0;i<res->nb_ligne;i++)
+    {
+      for(j=0;j<res->nb_col;j++)
+	{
+	  //printf("C0\n");
+	  fscanf(f,"%lf %lf %lf",&d1,&d2,&d3);
+	  printf("%p\n",res->tab);
+	  printf(" %p\n",res->tab[i*res->nb_col+j]
+		 /*res->tab[i*res->nb_col+j]*/);
+	  (res->tab)[i*res->nb_col+j].x=d1;
+	  (res->tab)[i*res->nb_col+j].y=d2;
+	  (res->tab)[i*res->nb_col+j].z=d3;
+	  (res->tab)[i*res->nb_col+j].t=1.0;
+	  printf("C\n");
+	}
+      fscanf(f,"\n");
+      printf("V\n");
+    }
+  printf("suite2\n");
+  points_controles=res;
+  /*objet=triangulation(fonc_pt_contr1,fonc_pt_contr2,fonc_pt_contr3,
+		      0,1,0,1,nb_u,nb_v);
+  if(objet==NULL)
+    {
+      printf("Erreur\n");
+      break;
+    }
+    return res;*/
+}
+
+void remplir_M15(double xo, double yo, double zo, double theta, double phi,
+double psi)
+{
+  MATRICE 
+
+  M12={
+    {1.0, 0.0, 0.0, -xo},
+    {0.0, 1.0, 0.0, -yo},
+    {0.0, 0.0, 1.0, -zo},
+    {1.0, 0.0, 0.0, 1.0}
+  },
+
+  M23=
+  {
+    {cos(theta), 0.0, -sin(theta),0.0},
+    {0.0,        1.0, 0.0,0.0},
+    {sin(theta), 0.0, cos(theta),0.0},
+    {0.0,        0.0, 0.0,1.0}
+  },
+
+  M34=
+  {
+    {1.0,0.0,0.0,0.0},
+    {0.0,cos(phi),-sin(phi),0.0},
+    {0.0,sin(phi),cos(phi),0.0},
+    {0.0,0.0,0.0,1.0}
+  },
+  
+  M45=
+  {
+    {cos(psi),-sin(psi),0.0,0.0},
+    {sin(psi),cos(psi),0.0,0.0},
+    {0.0,0.0,1.0,0.0},
+    {0.0,0.0,0.0,1.0}
+  },Mtemp,Mtemp2,Mtemp3;
+
+  //printf("y0=%lf\n",yo);
+  //affiche_mat(M12,"M12");affiche_mat(M23,"M23");
+  //affiche_mat(M34,"M34");affiche_mat(M45,"M45");
+  mulmat(M12,M23,Mtemp);
+  //affiche_mat(Mtemp,"M12*M23");
+  mulmat(Mtemp,M34,Mtemp2);
+  //affiche_mat(Mtemp2,"Mtemp*M34");
+  mulmat(Mtemp2,M45,M15);
+  //affiche_mat(M15,"Mtemp*MM45");
+  //printf();
+  //exit(0);
+}
+
+void remplir_Mt(double d, double r)
+{
+  MATRICE Mtemp=
+  {
+    {d,0.0,0.0,0.0},
+    {0.0,d,0.0,0.0},
+    {0.0,0.0,d,0.0},
+    {0.0,0.0,-1.0,r}
+  };
+
+  memcpy(Mt,Mtemp,sizeof(Mtemp));
+}
+
+void affiche_objet(OBJET *obj)
+{
+ int i,j, *tmp, tmp2;
+ POINT *so;
+ ARETE *ar;
+ FACE *faso, *faar;
+ 
+ printf("Affichage_objet so:\n");
+ 
+ if(obj==NULL)
+   {
+     printf("Erreur: objet null\n");
+     return ;
+   }
+ /* les sommets */
+ so=obj->so;
+ printf("#il y a %d sommets:\n",obj->ns);
+ for(i=0;i<obj->ns;i++)
+ {
+  printf("%d %g %g %g %g\n",i+1,so->x,so->y,so->z,so->t);
+  so++;
+ }
+ /* les sommets transformes */
+ so=obj->tso;
+ printf("#il y a %d sommets transformes:\n",obj->ns);
+ for(i=0;i<obj->ns;i++)
+ {
+  printf("%d %g %g %g %g\n",i+1,so->x,so->y,so->z,so->t);
+  so++;
+ }
+ /* les aretes */
+ ar=obj->ar;
+ printf("#il y a %d aretes:\n",obj->na);
+ for(i=0;i<obj->na;i++)
+ {
+  printf("%d %d %d %d\n",i+1,ar->nor,ar->nex,ar->nat);
+  ar++;
+ }
+ /* les faces */
+ faso=obj->faso;
+ printf("#il y a %d faces: (faso)\n",obj->nf);
+
+ for(i=1;i<=obj->nf;i++)
+ {
+   printf("%d ",i);
+   j=0;
+   tmp=faso[i];
+   tmp2=tmp[j];
+   //j++;
+   printf("%d ",tmp[j]);
+   do
+     {
+       j++;
+       printf("%d ",tmp[j]);
+     }
+     while(tmp[j] != tmp[0]);
+   printf("\n");
+ }
+ 
+}
+
+void affiche_objet_ds_fichier(OBJET *obj)
+{
+ int i,j, *tmp, tmp2;
+ POINT *so;
+ ARETE *ar;
+ FACE *faso, *faar;
+ FILE *f; 
+ //printf("Affichage_objet so:\n");
+ 
+ f=fopen("essai","w");
+
+ 
+ if(obj==NULL)
+   {
+     printf("Erreur: objet null\n");
+   }
+
+ fprintf(f,"# equation parametrique\n");
+ fprintf(f,"%d %d %d\n",obj->ns,obj->na,obj->nf);
+ /* les sommets */
+ so=obj->so;
+ fprintf(f,"#il y a %d sommets:\n",obj->ns);
+ for(i=0;i<obj->ns;i++)
+ {
+  fprintf(f,"%d %g %g %g %g\n",i+1,so->x,so->y,so->z,so->t);
+  so++;
+ }
+ /* les aretes */
+ ar=obj->ar;
+ fprintf(f,"#il y a %d aretes:\n",obj->na);
+ for(i=0;i<obj->na;i++)
+ {
+  fprintf(f,"%d %d %d %d\n",i+1,ar->nor,ar->nex,ar->nat);
+  ar++;
+ }
+ /* les faces */
+ faso=obj->faso;
+ fprintf(f,"#il y a %d faces: (faso)\n",obj->nf);
+
+ for(i=1;i<=obj->nf;i++)
+ {
+   fprintf(f,"%d ",i);
+   j=0;
+   tmp=faso[i];
+   tmp2=tmp[j];
+   //j++;
+   fprintf(f,"%d ",tmp[j]);
+   do
+     {
+       j++;
+       fprintf(f,"%d ",tmp[j]);
+     }
+     while(tmp[j] != tmp[0]);
+   fprintf(f,"\n");
+ }
+ fclose(f);
+ 
+}
+
+void affiche_objet2(OBJET *obj)
+{
+  int i,j;
+  POINT *so;
+  ARETE *ar;
+  
+  printf("Affichage_objet tso:\n");
+ 
+ /* les sommets */
+ so=obj->tso;
+ printf("il y a %d sommets:\n",obj->ns);
+ for(i=0;i<obj->ns;i++)
+ {
+  printf("%d) = %g %g %g %g\n",i+1,so->x,so->y,so->z,so->t);
+  so++;
+ }
+ 
+ /* les aretes */
+
+ ar=obj->ar;
+ printf("il y a %d aretes:\n",obj->na);
+ for(i=0;i<obj->na;i++)
+ {
+  printf("%d) = %d %d %d\n",i+1,ar->nor,ar->nex,ar->nat);
+  ar++;
+ }
+ 
+ 
+}
+
+/* retourne le produit scalaire de u et v */
+double pscal3d(POINT u,POINT v)
+{
+  return (u.x*v.x)+(u.y*v.y)+(u.z*v.z);
+}
+
+/* retourne 1 ssi les point p1 p2 et p3 sont alignes */
+int colineaire(POINT p1,POINT p2,POINT p3)
+{
+  POINT u,v;
+  
+  // u contient le segment [p1,p2]
+  u.x=p2.x-p1.x;
+  u.y=p2.y-p1.y;
+  u.z=p2.z-p1.z;
+// v contient le segment [p1,p3]
+  v.x=p3.x-p1.x;
+  v.y=p3.y-p1.y;
+  v.z=p3.z-p1.z;
+
+  return pscal3d(u,v)==0.0;
+}
+
+/* retourne un objet triangule */
+OBJET *triangulation(double(*f)(double a,double b), 
+       double(*g)(double a,double b), 
+       double(*h)(double a,double b),
+       double umin,double umax,double vmin,
+       double vmax,int nu,int nv)
+{
+  int i,j,na,ns,nf,s1,s2,s3,s4,a1,a2,a3,a4,a5;
+  int *tmp, tmp2;
+  double pu,pv,x,y,z,u,v;
+  OBJET *ret;
+  POINT *so;
+  ARETE *ar;
+  FACE *faso, *faar;
+  
+  if(nv<=1||nu<=1)
+    {
+      printf("Erreur: nu ou nv doivent etre >1\n");
+      exit(1);
+    }
+
+  pu=(umax-umin)/(nv-1);
+  pv=(vmax-vmin)/(nu-1);
+  
+  ret=(OBJET *)malloc(sizeof(OBJET));
+  
+printf("salut\n");
+  //Sommets
+  ns=0;
+  so=(POINT*)calloc(nu*nv+1,sizeof(POINT));
+  for(j=0;j<nu;j++)
+    for(i=0;i<nv;i++)
+      {
+	ns++;
+	u=umin+i*pu;
+	v=vmin*j*pv;
+	x=f(u,v);y=g(u,v);z=h(u,v);
+	so[ns].x=x; // /R 
+	so[ns].y=y;
+	so[ns].z=z;
+	so[ns].t=1;
+	/*so[ns].x=y; // /R1
+	  so[ns].y=z;
+	  so[ns].z=x;
+	  so[ns].t=1;*/
+      }
+printf("salut4\n");
+  //aretes
+  na=0;
+  printf("salut6(%d)\n",3*nu*nv-2*nu-2*nv+1);
+  ar=(ARETE *)calloc(3*nu*nv-2*nu-2*nv+1+1,sizeof(ARETE));
+  printf("salut7\n");
+  //horizontales
+  for(j=0;j<nu;j++)
+    for(i=0;i<nv-1;i++)
+      {
+	na++;
+	printf("na=%d\n",na);
+	ar[na].nor=j*nv+i+1; //s1
+	ar[na].nex=j*nv+(i+1)+1; //s2
+	ar[na].nat=1;
+      }
+ printf("salut5(%d)\n",na);
+  //verticales
+  for(j=0;j<nu-1;j++)
+    for(i=0;i<nv;i++)
+      {
+	na++;
+	ar[na].nor=j*nv+i+1; //s1
+	ar[na].nex=(j+1)*nv+i+1; //s4
+	ar[na].nat=1;
+      }
+ printf("salut3(%d)\n",na);
+  //obliques
+  for(j=0;j<nu-1;j++)
+    for(i=0;i<nv-1;i++)
+      {
+	na++;
+	printf("na2=%d\n",na);
+	ar[na].nor=j*nv+(i+1)+1; //s2
+	ar[na].nex=(j+1)*nv+i+1; //s4
+	ar[na].nat=1;
+      }
+  
+  //Faces
+  nf=0;
+  faar=(FACE*)calloc(2*nu*nv-2*nu-2*nv+2+1,sizeof(FACE));
+  faso=(FACE*)calloc(2*nu*nv-2*nu-2*nv+2+1,sizeof(FACE));
+  printf("salut2\n");
+  for(j=0;j<nu-1;j++)
+    for(i=0;i<nv-1;i++)
+      {
+	s1=j*nv+i+1;
+	s2=j*nv+(i+1)+1;
+	s3=(j+1)*nv+(i+1)+1;
+	s4=(j+1)*nv+i+1;
+	
+	a1=j*(nv-1)+i+1;
+	a4=nu*(nv-1)+j*nv+i+1;
+	a2=a4+nu-1;
+	a3=a1+nv-1;
+	a5=nu*(nv-1)+nv*(nu-1)+j*(nv-1)+i+1;
+	
+	if(!colineaire(so[s1],so[s2],so[s4]))
+	  { // so[s1],so[s2],so[s4] pas colineaires
+	    nf++;
+	    faso[nf]=(int *)calloc(4,sizeof(int));
+	    (faso[nf])[0]=s1;
+	    (faso[nf])[1]=s2;
+	    (faso[nf])[2]=s4;
+	    (faso[nf])[3]=s1;
+	    faar[nf]=(int *)calloc(3,sizeof(int));
+	    (faar[nf])[0]=a1;
+	    (faar[nf])[1]=a5;
+	    (faar[nf])[2]=-a4;
+	  }
+	if(!colineaire(so[s2],so[s3],so[s4]))
+	  { // so[s2],so[s3],so[s4] pas colineaires
+	    nf++;
+	    faso[nf]=(int *)calloc(4,sizeof(int));
+	    (faso[nf])[0]=s2;
+	    (faso[nf])[1]=s3;
+	    (faso[nf])[2]=s4;
+	    (faso[nf])[3]=s2;
+	    faar[nf]=(int *)calloc(3,sizeof(int));
+	    (faar[nf])[0]=a2;
+	    (faar[nf])[1]=-a3;
+	    (faar[nf])[2]=-a5;
+	  }
+      }
+  
+ /* retour de l'objet */
+  ret->ns=ns;
+  ret->na=na;
+  ret->nf=nf;
+
+  ret->so=so;
+  ret->tso=(POINT*)calloc(nu*nv+1,sizeof(POINT));
+  ret->ar=ar;
+  ret->faar=faar;
+  ret->faso=faso;
+
+  return ret;
+}
+
+void efface_objet(OBJET *objet)
+{
+  int i;
+  
+  if(points_controles!=NULL)
+    {
+      free(points_controles->tab);
+      free(points_controles);
+      points_controles=NULL;
+    }
+  
+  if(objet==NULL)
+    return;
+
+  if(objet->so!=NULL)
+    free(objet->so);
+  if(objet->tso!=NULL)
+    free(objet->tso);
+  if(objet->ar!=NULL)
+    free(objet->ar);
+  if(objet->faso!=NULL)
+    {
+      for(i=0;i<objet->nf+1;i++)
+	{
+	  if(objet->faso[i]!=NULL)
+	    {
+	      free(objet->faso[i]);
+	    }
+	}
+      free(objet->faso);
+    }
+  if(objet->faar!=NULL)
+    {
+      for(i=0;i<objet->nf;i++)
+	{
+	  if(objet->faso[i]!=NULL)
+	    {
+	      free(objet->faar[i]);
+	    }
+	}
+      free(objet->faar);
+    }
+  free(objet);
+}

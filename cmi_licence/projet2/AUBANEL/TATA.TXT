@@ -1,0 +1,25 @@
+Annalyse du fichier test13~2.kis
+annalyse contextuelle
+Erreur:Il y a un conflit entre fonction speciale load (a la ligne -1) et la fonction load (a la ligne 19)
+Erreur:Il y a un conflit entre la fonction test (a la ligne 14) et la variable locale test (a la ligne 4)
+Erreur (ligne 7) : ce n'est pas une fonction declaree
+Erreur (ligne 8) : La variable c n'a pas ete declare
+Erreur (ligne 8) : ce n'est pas une fonction declaree
+Erreur (ligne 27) : La variable m n'a pas ete declare
+Erreur (ligne 29) : type incompatible dans l'affectation
+Erreur (ligne 30) : Impossible d'appliquer cette operation sur ce type bool
+Erreur (ligne 31) : il n'y a pas le bon nombre de parametres
+Erreur (ligne 32) : type incompatible dans l'affectation
+fonction speciale load
+la fonction unload
+la fonction map
+la fonction unmap
+la fonction coucou
+la variable globale a
+la variable globale b
+la variable globale i
+la variable globale j
+la fonction t
+la fonction test
+fin d'annalyse contextuelle
+Le fichier test13~2.kis a eut 10 erreurs

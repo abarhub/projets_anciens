@@ -1,0 +1,22 @@
+all:
+	camlc -c arbre.mli
+	camlc -c excep.mli
+	camllex lexer.mll
+	camlyacc parser.mly
+	camlc -c parser.mli
+	camlc -c parser.ml
+	camlc -c lexer.ml
+	camlc -c deriv.mli
+	camlc -c deriv.ml
+	camlc -c affiche.mli
+	camlc -c affiche.ml
+	camlc -c simpl.mli
+	camlc -c simpl.ml
+	camlc -c main.ml
+	camlc -o main.exe  lexer.zo parser.zo simpl.zo deriv.zo affiche.zo main.zo
+
+run:
+	camlrun main.exe test1.txt
+
+clean:
+	rm *.zi *.zo

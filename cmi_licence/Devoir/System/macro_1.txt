@@ -1,0 +1,43 @@
+dsfsdqxccxw
+#define ALAIN(A) dfgfdsfdhg
+vcxbvc
+
+vcbcxbds
+fdfdq
+#define T ABcdEF
+vcxvcw
+feqer
+#define Allor
+#gfdsfdgfdq
+f T
+FIN
+#define Coucou(alo) fdgfdgfdsq fsdfbsb alo fdgsdsfds
+
+#define C()fgfdsfdhg gfbngfgfnb
+#define  f     ()
+#define          err(+_]) fdhdhfs
+Salut
+T T
+
+#define ABCABC toto1 toto2
+
+Rien ABCABC Rien2 !
+f ABCABC gABCABC ABCABC ABCAB
+Coucou(aaaa) gfnbnx
+
+#define A(XY,ZT) (XY)/(ZT)
+#define B (X) X
+
+hello a A(2,3) et a A ( 9 ,5) B(6) B  fin
+
+#define U(X) B(X)
+!U(tout)!
+#define V(YF) A(1,YF) V(1+YF)
+ V(6,8)
+
+#define BEGIN {  \
+                 int i \
+                 }
+
+BEGIN
+Allor

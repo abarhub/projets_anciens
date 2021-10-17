@@ -1,0 +1,22 @@
+Program toto
+begin {toto}
+	/*int a,i;
+	string s1;*/
+	//bool b;
+	string s;
+	
+	s=-"";
+	/*if(s1=="456") then
+	begin {if}
+	
+	end{if}
+	else
+	begin {else}
+	
+	end {else}*/
+	
+	/*i=map(if);
+	return ;
+	a=i+5;*/
+	return;
+end{toto}

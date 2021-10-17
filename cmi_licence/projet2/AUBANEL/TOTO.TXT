@@ -1,0 +1,299 @@
+make: *** Warning: File `parse.tab.o' has modification time in the future (2001-05-02 11:40:42 > 2001-05-02 11:06:25)
+flex lexer.lex
+gcc -Wall -c lexyy.c
+lexyy.c:125: parse error before `do'
+lexyy.c:125: stray '\' in program
+lexyy.c:126: stray '\' in program
+lexyy.c:127: stray '\' in program
+lexyy.c:128: stray '\' in program
+lexyy.c:129: stray '\' in program
+lexyy.c:130: warning: type defaults to `int' in declaration of `yy_c_buf_p'
+lexyy.c:130: `yy_cp' undeclared here (not in a function)
+lexyy.c:130: `yy_bp' undeclared here (not in a function)
+lexyy.c:130: `n' undeclared here (not in a function)
+lexyy.c:130: `YY_MORE_ADJ' undeclared here (not in a function)
+lexyy.c:130: warning: data definition has no type or storage class
+lexyy.c:130: stray '\' in program
+lexyy.c:131: warning: type defaults to `int' in declaration of `YY_DO_BEFORE_ACTION'
+lexyy.c:131: warning: data definition has no type or storage class
+lexyy.c:131: stray '\' in program
+lexyy.c:132: parse error before `}'
+lexyy.c:132: stray '\' in program
+lexyy.c:154: parse error before `yy_size_t'
+lexyy.c:154: warning: no semicolon at end of struct or union
+lexyy.c:199: parse error before `}'
+lexyy.c:213: conflicting declarations of `yy_n_chars'
+lexyy.c:159: `yy_n_chars' previously declared here
+lexyy.c:219: conflicting types for `yy_c_buf_p'
+lexyy.c:130: previous declaration of `yy_c_buf_p'
+lexyy.c:238: parse error before `yy_size_t'
+lexyy.c:242: warning: parameter names (without types) in function declaration
+lexyy.c:243: parse error before `yy_size_t'
+lexyy.c:249: parse error before `{'
+lexyy.c:249: stray '\' in program
+lexyy.c:250: stray '\' in program
+lexyy.c:251: stray '\' in program
+lexyy.c:252: stray '\' in program
+lexyy.c:256: stray '\' in program
+lexyy.c:257: stray '\' in program
+lexyy.c:258: stray '\' in program
+lexyy.c:259: stray '\' in program
+lexyy.c:282: warning: type defaults to `int' in declaration of `yytext'
+lexyy.c:282: conflicting types for `yytext'
+lexyy.c:270: previous declaration of `yytext'
+lexyy.c:282: `yy_bp' undeclared here (not in a function)
+lexyy.c:282: warning: data definition has no type or storage class
+lexyy.c:282: stray '\' in program
+lexyy.c:283: parse error before `-='
+lexyy.c:283: stray '\' in program
+lexyy.c:284: warning: type defaults to `int' in declaration of `yyleng'
+lexyy.c:284: `yy_cp' undeclared here (not in a function)
+lexyy.c:284: warning: data definition has no type or storage class
+lexyy.c:284: stray '\' in program
+lexyy.c:285: warning: type defaults to `int' in declaration of `yy_hold_char'
+lexyy.c:285: conflicting types for `yy_hold_char'
+lexyy.c:211: previous declaration of `yy_hold_char'
+lexyy.c:285: `yy_cp' undeclared here (not in a function)
+lexyy.c:285: warning: data definition has no type or storage class
+lexyy.c:285: stray '\' in program
+lexyy.c:286: warning: type defaults to `int' in declaration of `yy_cp'
+lexyy.c:286: warning: data definition has no type or storage class
+lexyy.c:286: stray '\' in program
+lexyy.c:287: warning: type defaults to `int' in declaration of `yy_c_buf_p'
+lexyy.c:287: conflicting types for `yy_c_buf_p'
+lexyy.c:219: previous declaration of `yy_c_buf_p'
+lexyy.c:287: warning: initialization makes integer from pointer without a cast
+lexyy.c:287: initializer element is not constant
+lexyy.c:287: warning: data definition has no type or storage class
+lexyy.c:445: conflicting types for `yytext'
+lexyy.c:282: previous declaration of `yytext'
+lexyy.c:563: parse error before `if'
+lexyy.c:563: stray '\' in program
+lexyy.c:564: stray '\' in program
+lexyy.c:565: stray '\' in program
+lexyy.c:566: stray '\' in program
+lexyy.c:567: stray '\' in program
+lexyy.c:568: stray '\' in program
+lexyy.c:569: stray '\' in program
+lexyy.c:570: stray '\' in program
+lexyy.c:571: stray '\' in program
+lexyy.c:572: stray '\' in program
+lexyy.c:573: warning: type defaults to `int' in declaration of `result'
+lexyy.c:573: `n' undeclared here (not in a function)
+lexyy.c:573: warning: data definition has no type or storage class
+lexyy.c:573: stray '\' in program
+lexyy.c:574: parse error before `}'
+lexyy.c:574: stray '\' in program
+lexyy.c:575: stray '\' in program
+lexyy.c:576: stray '\' in program
+lexyy.c: In function `yylex':
+lexyy.c:660: invalid operands to binary -
+lexyy.c:663: warning: assignment makes pointer from integer without a cast
+lexyy.c:703: stray '\' in program
+lexyy.c:719: stray '\' in program
+lexer.lex:40: stray '\' in program
+lexer.lex:41: stray '\' in program
+lexer.lex:42: stray '\' in program
+lexer.lex:43: stray '\' in program
+lexer.lex:44: stray '\' in program
+lexer.lex:45: stray '\' in program
+lexer.lex:46: stray '\' in program
+lexer.lex:47: stray '\' in program
+lexer.lex:48: stray '\' in program
+lexer.lex:49: stray '\' in program
+lexer.lex:50: stray '\' in program
+lexer.lex:51: stray '\' in program
+lexer.lex:52: stray '\' in program
+lexer.lex:53: stray '\' in program
+lexer.lex:54: stray '\' in program
+lexer.lex:55: stray '\' in program
+lexer.lex:56: stray '\' in program
+lexer.lex:57: stray '\' in program
+lexer.lex:58: stray '\' in program
+lexer.lex:59: stray '\' in program
+lexer.lex:60: stray '\' in program
+lexer.lex:66: stray '\' in program
+lexer.lex:71: stray '\' in program
+lexer.lex:76: stray '\' in program
+lexer.lex:78: stray '\' in program
+lexer.lex:80: stray '\' in program
+lexer.lex:82: stray '\' in program
+lexer.lex:83: stray '\' in program
+lexer.lex:88: stray '\' in program
+lexer.lex:99: stray '\' in program
+lexer.lex:100: stray '\' in program
+lexer.lex:102: stray '\' in program
+lexer.lex:103: stray '\' in program
+lexer.lex:104: stray '\' in program
+lexer.lex:106: stray '\' in program
+lexer.lex:107: stray '\' in program
+lexer.lex:108: stray '\' in program
+lexer.lex:110: stray '\' in program
+lexer.lex:111: stray '\' in program
+lexer.lex:112: stray '\' in program
+lexer.lex:113: stray '\' in program
+lexer.lex:114: stray '\' in program
+lexer.lex:115: stray '\' in program
+lexer.lex:116: stray '\' in program
+lexer.lex:117: stray '\' in program
+lexer.lex:120: stray '\' in program
+lexyy.c:996: dereferencing pointer to incomplete type
+lexyy.c:1007: dereferencing pointer to incomplete type
+lexyy.c:1008: dereferencing pointer to incomplete type
+lexyy.c:1009: dereferencing pointer to incomplete type
+lexyy.c:1019: dereferencing pointer to incomplete type
+lexyy.c:1023: warning: assignment makes integer from pointer without a cast
+lexyy.c:1043: warning: assignment makes pointer from integer without a cast
+lexyy.c:1050: warning: assignment makes pointer from integer without a cast
+lexyy.c:1072: warning: assignment makes integer from pointer without a cast
+lexyy.c:1088: warning: assignment makes integer from pointer without a cast
+lexyy.c:1092: warning: assignment makes pointer from integer without a cast
+lexyy.c:1098: dereferencing pointer to incomplete type
+lexyy.c:1102: warning: assignment makes pointer from integer without a cast
+lexyy.c: In function `yy_get_next_buffer':
+lexyy.c:1127: dereferencing pointer to incomplete type
+lexyy.c:1132: dereferencing pointer to incomplete type
+lexyy.c:1136: dereferencing pointer to incomplete type
+lexyy.c:1138: invalid operands to binary -
+lexyy.c:1158: invalid operands to binary -
+lexyy.c:1163: dereferencing pointer to incomplete type
+lexyy.c:1167: dereferencing pointer to incomplete type
+lexyy.c:1172: dereferencing pointer to incomplete type
+lexyy.c:1185: dereferencing pointer to incomplete type
+lexyy.c:1187: dereferencing pointer to incomplete type
+lexyy.c:1189: dereferencing pointer to incomplete type
+lexyy.c:1192: dereferencing pointer to incomplete type
+lexyy.c:1192: dereferencing pointer to incomplete type
+lexyy.c:1194: dereferencing pointer to incomplete type
+lexyy.c:1196: dereferencing pointer to incomplete type
+lexyy.c:1198: dereferencing pointer to incomplete type
+lexyy.c:1199: dereferencing pointer to incomplete type
+lexyy.c:1203: dereferencing pointer to incomplete type
+lexyy.c:1205: dereferencing pointer to incomplete type
+lexyy.c:1209: dereferencing pointer to incomplete type
+lexyy.c:1211: dereferencing pointer to incomplete type
+lexyy.c:1220: stray '\' in program
+lexyy.c:1223: dereferencing pointer to incomplete type
+lexyy.c:1237: dereferencing pointer to incomplete type
+lexyy.c:1246: dereferencing pointer to incomplete type
+lexyy.c:1247: dereferencing pointer to incomplete type
+lexyy.c:1249: dereferencing pointer to incomplete type
+lexyy.c: In function `yy_get_previous_state':
+lexyy.c:1264: warning: comparison between pointer and integer
+lexyy.c: In function `yy_try_NUL_trans':
+lexyy.c:1299: warning: initialization makes pointer from integer without a cast
+lexyy.c: In function `yyunput':
+lexyy.c:1329: warning: initialization makes pointer from integer without a cast
+lexyy.c:1334: dereferencing pointer to incomplete type
+lexyy.c:1338: dereferencing pointer to incomplete type
+lexyy.c:1339: dereferencing pointer to incomplete type
+lexyy.c:1341: dereferencing pointer to incomplete type
+lexyy.c:1343: dereferencing pointer to incomplete type
+lexyy.c:1348: dereferencing pointer to incomplete type
+lexyy.c:1349: dereferencing pointer to incomplete type
+lexyy.c:1351: dereferencing pointer to incomplete type
+lexyy.c:1360: warning: assignment makes integer from pointer without a cast
+lexyy.c: In function `input':
+lexyy.c:1373: invalid type argument of `unary *'
+lexyy.c:1375: invalid type argument of `unary *'
+lexyy.c:1381: dereferencing pointer to incomplete type
+lexyy.c:1383: invalid type argument of `unary *'
+lexyy.c:1387: invalid operands to binary -
+lexyy.c:1423: warning: assignment makes integer from pointer without a cast
+lexyy.c:1430: invalid type argument of `unary *'
+lexyy.c:1431: invalid type argument of `unary *'
+lexyy.c: In function `yy_switch_to_buffer':
+lexyy.c:1466: invalid type argument of `unary *'
+lexyy.c:1467: dereferencing pointer to incomplete type
+lexyy.c:1468: dereferencing pointer to incomplete type
+lexyy.c: In function `yy_load_buffer_state':
+lexyy.c:1489: dereferencing pointer to incomplete type
+lexyy.c:1490: dereferencing pointer to incomplete type
+lexyy.c:1491: dereferencing pointer to incomplete type
+lexyy.c:1492: invalid type argument of `unary *'
+lexyy.c: In function `yy_create_buffer':
+lexyy.c:1506: sizeof applied to an incomplete type
+lexyy.c:1510: dereferencing pointer to incomplete type
+lexyy.c:1515: dereferencing pointer to incomplete type
+lexyy.c:1515: dereferencing pointer to incomplete type
+lexyy.c:1516: dereferencing pointer to incomplete type
+lexyy.c:1519: dereferencing pointer to incomplete type
+lexyy.c: In function `yy_delete_buffer':
+lexyy.c:1540: dereferencing pointer to incomplete type
+lexyy.c:1541: dereferencing pointer to incomplete type
+lexyy.c: In function `yy_init_buffer':
+lexyy.c:1565: dereferencing pointer to incomplete type
+lexyy.c:1566: dereferencing pointer to incomplete type
+lexyy.c:1574: dereferencing pointer to incomplete type
+lexyy.c: In function `yy_flush_buffer':
+lexyy.c:1591: dereferencing pointer to incomplete type
+lexyy.c:1597: dereferencing pointer to incomplete type
+lexyy.c:1598: dereferencing pointer to incomplete type
+lexyy.c:1600: dereferencing pointer to incomplete type
+lexyy.c:1600: dereferencing pointer to incomplete type
+lexyy.c:1602: dereferencing pointer to incomplete type
+lexyy.c:1603: dereferencing pointer to incomplete type
+lexyy.c: At top level:
+lexyy.c:1612: parse error before `yy_size_t'
+lexyy.c: In function `yy_scan_buffer':
+lexyy.c:1621: `size' undeclared (first use in this function)
+lexyy.c:1621: (Each undeclared identifier is reported only once
+lexyy.c:1621: for each function it appears in.)
+lexyy.c:1622: `base' undeclared (first use in this function)
+lexyy.c:1627: sizeof applied to an incomplete type
+lexyy.c:1631: dereferencing pointer to incomplete type
+lexyy.c:1632: dereferencing pointer to incomplete type
+lexyy.c:1632: dereferencing pointer to incomplete type
+lexyy.c:1633: dereferencing pointer to incomplete type
+lexyy.c:1634: dereferencing pointer to incomplete type
+lexyy.c:1635: dereferencing pointer to incomplete type
+lexyy.c:1635: dereferencing pointer to incomplete type
+lexyy.c:1636: dereferencing pointer to incomplete type
+lexyy.c:1637: dereferencing pointer to incomplete type
+lexyy.c:1638: dereferencing pointer to incomplete type
+lexyy.c:1639: dereferencing pointer to incomplete type
+lexyy.c: In function `yy_scan_bytes':
+lexyy.c:1676: `yy_size_t' undeclared (first use in this function)
+lexyy.c:1676: parse error before `n'
+lexyy.c:1680: `n' undeclared (first use in this function)
+lexyy.c:1697: dereferencing pointer to incomplete type
+lexyy.c: At top level:
+lexyy.c:1777: parse error before `do'
+lexyy.c:1777: stray '\' in program
+lexyy.c:1778: stray '\' in program
+lexyy.c:1779: stray '\' in program
+lexyy.c:1780: stray '\' in program
+lexyy.c:1781: warning: type defaults to `int' in declaration of `yy_c_buf_p'
+lexyy.c:1781: redefinition of `yy_c_buf_p'
+lexyy.c:287: `yy_c_buf_p' previously defined here
+lexyy.c:1781: `n' undeclared here (not in a function)
+lexyy.c:1781: initializer element is not constant
+lexyy.c:1781: warning: data definition has no type or storage class
+lexyy.c:1781: stray '\' in program
+lexyy.c:1782: warning: type defaults to `int' in declaration of `yy_hold_char'
+lexyy.c:1782: redefinition of `yy_hold_char'
+lexyy.c:285: `yy_hold_char' previously defined here
+lexyy.c:1782: invalid type argument of `unary *'
+lexyy.c:1782: warning: data definition has no type or storage class
+lexyy.c:1782: stray '\' in program
+lexyy.c:1783: warning: type defaults to `int' in declaration of `yy_c_buf_p'
+lexyy.c:1783: conflicting types for `yy_c_buf_p'
+lexyy.c:1781: previous declaration of `yy_c_buf_p'
+lexyy.c:1783: warning: data definition has no type or storage class
+lexyy.c:1783: stray '\' in program
+lexyy.c:1784: warning: type defaults to `int' in declaration of `yyleng'
+lexyy.c:1784: redefinition of `yyleng'
+lexyy.c:284: `yyleng' previously defined here
+lexyy.c:1784: `n' undeclared here (not in a function)
+lexyy.c:1784: warning: data definition has no type or storage class
+lexyy.c:1784: stray '\' in program
+lexyy.c:1785: parse error before `}'
+lexyy.c:1785: stray '\' in program
+lexyy.c:1835: parse error before `yy_size_t'
+lexyy.c: In function `yy_flex_realloc':
+lexyy.c:1849: `ptr' undeclared (first use in this function)
+lexyy.c:1849: `size' undeclared (first use in this function)
+lexyy.c: At top level:
+lexyy.c:242: warning: `yy_flex_alloc' declared `static' but never defined
+lexyy.c:1328: warning: `yyunput' defined but not used
+make: *** [lexyy.o] Error 1

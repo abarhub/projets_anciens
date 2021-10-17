@@ -1,0 +1,8 @@
+courbe50: courbe50.o outils2d.o
+	cc -o courbe50 courbe50.o outils2d.o -lgx -lX11 -lm
+
+courbe50.o: courbe50.c 2d.h
+	cc -c courbe50.c
+
+outils2d.o: outils2d.c 2d.h
+	cc -c outils2d.c

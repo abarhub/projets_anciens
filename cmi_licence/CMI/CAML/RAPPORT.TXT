@@ -1,0 +1,32 @@
+Rapport du projet de Caml
+
+Aubanel Vincent
+Barret Alain
+
+* pour l'utiliser:
+- en ligne de commande, "make", puis "make run" ou "main.exe".
+- dans l'interface, 'include "loadall.ml"';;
+- le fichier test1.ml contient plusieurs exemple d'expressions valides
+
+* simplification effectuee:
+- dans chaque sommes, les constantes sont ajouter, et si le resultat est null,
+  il n'est pas mis dans la somme.
+- dans chaque produit, les constantes sont multiplier, et si le resultat est un,
+  il n'est pas mis dans la somme. Si le resultat est null, tout le produit
+  est remplace par 0.
+- abs d'une constante est remplace par la valeur absolue de la constante. Idem pour
+  moins unaire, quotient, mais dans ce dernier cas, si le denominateur est null,
+  un message indique que l'expression contient une division par zero.
+- les moins unaires et les difference dans une somme sont regroupee a la fin,
+  ce qui clarifie le resultat. Ex:
+  -a+b-c+d   ->  b+d-(a+d)
+  Idem pour les quotients dans un produit. Ex:
+  a/b*c/d*e  ->  a*c*e/(b*d)
+- 
+
+* explication des module:
+- lexer.mll: il fonctionne avec camllex. Il accepte les nombre a virgule, et les
+  nombres entiers qui convertie en flottant. Il gere les commentaires. Il retourne
+  FIN_FICH a la fin du fichier.
+- parser.mly: il fonctionne avec camlyacc. Il accepte plusieurs expressions a
+  deriver.

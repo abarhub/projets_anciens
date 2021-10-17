@@ -1,0 +1,73 @@
+#!/bin/csh -f
+
+# devoir 2 system
+# Script de l'exercice 2
+# auteur(TP3): Schudel Edwar
+#              Barret Alain
+
+# affichage du menu
+echo "  Menu"
+echo "  a)  General"
+echo "  b)  Particulier"
+echo "  c)  Min-Max"
+echo "  d)  Parametrage"
+echo ""
+echo -n "  Choisissez une lettre :"
+
+# lecture de l'utilisateur
+set a=$<
+
+# action a realise
+if($a == "a") then
+# Choix = general
+   echo "General"
+   echo "Le resultat est mis dans le fichier resultat.txt"
+   ./exo1 >"resultat.txt"
+else
+if($a == "b") then
+# Choix = Particulier
+   echo "Particulier"
+   echo -n "Entrez un utilisateur:"
+   set a=$<
+# recherche de l'adresse e-mail   
+   set b=`./exo1 $a | awk '(NF==7)&&($1=="*") {print $6 }'`
+   if "$b" != "" then
+      echo "Facturation de " $a " vers " $b " :"
+      ./exo1 $a | mail $b
+   else
+      echo "L'utilisateur n'existe pas"
+   endif
+else
+if($a == "c") then
+# Choix = Min-Max
+   echo "Min-Max"
+   echo -n "Entrez la consommation minimum en francs(virgule=.):"
+   set min=$<
+   echo -n "Entrez la consommation maximum en francs(virgule=.):"
+   set max=$<
+   ./exo1 | awk -v max=$max -v min=$min '(NF==7) {nom=$2 " " $3} (($1~/duree/)&&($2~/totale/)&&($7>=min)&&($7<=max)) { print nom "=" $0; }' | sort +7
+else
+if($a == "d") then
+# Choix = Parametrage
+   echo "Parametrage"
+   echo -n "Choisissez le montant du prix hors taxe de l'unite:"
+   set b=$<
+   setenv PRIXUNITE $b
+   echo -n "Choisissez le montant de la TVA:"
+   set b=$<
+   setenv PRIXTVA $b
+   ./exo1
+   unsetenv PRIXUNITE
+   unsetenv PRIXTVA
+else
+# Choix = Rien
+   echo "Aucune option choisi"
+   exit(1)
+endif
+endif
+
+endif
+endif
+
+# fin du programme
+exit(0)

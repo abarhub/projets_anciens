@@ -1,0 +1,22 @@
+
+
+string[3] fonction(img rt,int k,bool a)
+begin{a}
+	string[3] s;
+	
+	s[0]="coucou";
+	s[2]="salut";
+	return s;
+end {a}
+
+Program test
+begin {a}
+	begin {d}
+		img i;
+		int[5] t;
+		
+		t[4+6]=9;
+	end {d}
+        //f();
+	return;
+end {a}

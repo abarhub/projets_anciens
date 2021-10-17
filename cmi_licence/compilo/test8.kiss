@@ -1,0 +1,19 @@
+Program test
+
+begin {a}
+	begin {d}
+		img i;
+		int[5] t;
+		int[] t;
+		bool 7] j;
+		bool [8 l;
+	end {d}
+        f(1+5);
+	j=4+8/9-7/6;
+	i=(7+p)*(p-y);
+	j= !a && (b>c) || (g<=7+7) && !(f)&&!(7>8%9+1);
+	;
+    begin {}
+
+    end {754}
+end {a}

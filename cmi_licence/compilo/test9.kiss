@@ -1,0 +1,71 @@
+
+
+void salut(int qsgf,bool b,img sqg45sdg, string s1,string s2)
+begin {salut2}
+     string s;
+
+     s= (s1==s2);
+     s= s1==s2;
+     coucou();
+     if( (7%g*i-t/g<>(9+7)) && (true) || false || (7>=6) && (m) ) then
+     begin {if}
+         r=k<=5;
+         p= m==9;
+         if(s1=="456") then
+         begin {if}
+             salut(5/8,false,f,"a","b");
+             begin {g}
+                m=coucou()*9;
+             end{g}
+         end {if}
+     end {if}
+end {salut2}
+
+int coucou()
+begin {salut}
+   map(5,2,"u.img");
+   f();
+   g("fdddh"+"fdhs",-"fdsd");
+end {salut}
+
+void coucou(void)
+begin {e}
+
+end{e}
+
+Program Test
+begin {coucou}
+	int a,b,c;
+	bool q,r;
+	a=b;
+	c=5*9+a;
+	//  commentaire 1
+	/* commentaire 2 */
+	if(9*8==6/5) then 
+	begin {if}
+		a=6;b=7;
+	end {if}
+	else begin {else} b=8; end {else}
+	if(9*8==6/5) then begin {if} a=6;end {if}
+	if(e==9) then begin {if} continue;end {if}
+	if(true) then begin {if} continue;end {if}
+	//g=true || a;
+        g=true || a;
+        g=m;
+        if(p>0) then begin {if} j=8;end {if}
+        for(i=0;5<p;i=i+1)
+        begin {for}
+                o=map(0,0,img1);
+        end {for }
+
+        begin {r}
+
+        end{r}
+        j=load("coucou");
+        j=unload(j);
+        k=unmap(o);
+    i=map(if1);
+        img1=7;
+        ;
+
+end {coucou}

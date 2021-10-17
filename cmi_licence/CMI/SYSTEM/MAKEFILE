@@ -1,0 +1,83 @@
+all: tp1 tp2 tp3
+	@echo all
+
+.c.exe:
+	gcc -o $@ $<
+
+# tp 1
+
+tp1: exo1 exo2 exo3 exo41 exo10 exo412 exo422 exo423 exo43 exo5 exo52 exo61 \
+	exo610 exo62 exo63 exo7
+
+exo1:
+	gcc -o exo1 exo1.c
+exo2:
+	gcc -o exo2 exo2.c
+exo3:
+	gcc -o exo3 exo3.c
+exo41:
+	gcc -o exo41 exo41.c
+exo10:
+	gcc -o exo10 exo10.c
+exo412:
+	gcc -o exo412 exo412.c
+exo413:
+	gcc -o exo413 exo413.c
+exo421:
+	gcc -o exo421 exo421.c
+exo422:
+	gcc -o exo422 exo422.c
+exo423:
+	gcc -o exo423 exo423.c
+exo43:
+	gcc -o exo43 exo43.c
+exo5:
+	gcc -o exo5 exo5.c
+exo52:
+	gcc -o exo52 exo52.c
+exo61:
+	gcc -o exo61 exo61.c
+exo610:
+	gcc -o exo610 exo610.c
+exo62:
+	gcc -o exo62 exo62.c
+exo63:
+	gcc -o exo63 exo63.c
+exo7:
+	gcc -o exo7 exo7.c
+
+# tp 2
+
+tp2:  tp2exo13 tp2exo22 tp2exo23 tp2exo31
+
+tp2exo1:
+	gcc -o tp2exo1 tp2exo1.c -lpthread
+tp2exo13:
+	gcc -o tp2exo13 tp2exo13.c -lpthread
+tp2exo22:
+	gcc -o tp2exo22 tp2exo22.c -lpthread
+tp2exo23:
+	gcc -o tp2exo23 tp2exo23.c -lpthread
+tp2exo31:
+	gcc -o tp2exo31 tp2exo31.c -lpthread
+tp2exo32:
+	gcc -o tp2exo32 tp2exo32.c -lpthread
+tp2exo41:
+	gcc -o tp2exo41 tp2exo41.c -lpthread
+tp2exo42:
+	gcc -o tp2exo42 tp2exo42.c -lpthread
+
+# tp 3
+
+tp3: tp3exo1 tp3exo2
+
+tp3exo1:
+	gcc -o tp3exo1 tp3exo1.c
+tp3exo2:
+	gcc -o tp3exo2 tp3exo2.c
+
+clean:
+	- rm tp3exo1 tp3exo2 
+	- rm exo1 exo2 exo3 exo41 exo10 exo412 exo422 \
+	 exo423 exo43 exo5 exo52 exo61 exo610 exo62 exo63 exo7 
+	- rm tp2exo13 tp2exo22 tp2exo23 tp2exo31 

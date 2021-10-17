@@ -1,0 +1,19 @@
+1 fdgfd
+#define ALAIN
+2 vcbvcx
+
+4 fdgfdsfd
+5 vcbvcx
+6 fgdsq
+7
+#ifdef ALAIN
+9 Alain est defini
+#endif
+
+#ifdef TOTO
+13 Toto defini
+#else
+15 Toto non defini
+#endif
+17
+#alors content

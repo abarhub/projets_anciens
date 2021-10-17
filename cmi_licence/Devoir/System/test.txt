@@ -1,0 +1,6 @@
+#define TOTO(X) {  \
+                 X  \
+                  }
+TOTO(salut)
+#define TATA TOTO TATA+1
+TATA

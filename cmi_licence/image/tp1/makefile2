@@ -1,0 +1,8 @@
+courbe: courbe2.o outils2d.o
+	cc -o courbe2 courbe2.o outils2d.o -lgx -lX11 -lm
+
+courbe2.o: courbe2.c 2d.h
+	cc -c courbe2.c
+
+outils2d.o: outils2d.c 2d.h
+	cc -c outils2d.c

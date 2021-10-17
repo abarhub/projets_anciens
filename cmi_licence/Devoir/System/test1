@@ -1,0 +1,11 @@
+#!/bin/csh
+
+echo "test du devoir 1"
+#test(a)
+#{
+#./devoir1 test/$a
+#}
+./devoir1 test/toto.txt
+./devoir1 test/tata.txt
+./devoir1 test/vide.txt
+#test("toto.txt")

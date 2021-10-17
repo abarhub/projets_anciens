@@ -1,0 +1,39 @@
+int coucou(int a1,int a2)
+begin {salut}
+	bool q1,q2;
+
+	q1=true;q2=false;
+end {salut}
+
+Program Test
+begin {coucou}
+	int a,b,c;
+	bool q,r;
+	a=b;
+	c=5*9+a;
+	//  commentaire 1
+	/* commentaire 2 */
+	if(9*8==6/5) then 
+	begin {if}
+		a=6;b=7;
+	end {if}
+	else begin {else} b=8;end {else}
+	if(9*8==6/5) then begin {if} a=6;end{if}
+	if(e==9) then begin {if} continue;end{if}
+	if(true) then begin {if} continue;end{if}
+	//g=true || a;
+        //g=true || a;
+        g=m;
+        if(/*p*/false) then begin {if} j=8;end{if}
+        for(i=0;/*5*/true;i=i+1)
+        begin {for}
+                o=map(0,0,img1);
+        end {for }
+
+        j=load("coucou");
+        j=unload(j);
+        k=unmap(o);
+        img1=7;
+        ;
+
+end {coucou}

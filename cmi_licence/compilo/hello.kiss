@@ -1,0 +1,12 @@
+Program Hello
+
+begin {Hello}
+	img msg;
+	
+	msg=load("HelloWorld");
+	
+	map(0,0,msg);
+	
+	unload(msg);
+	return; 
+end {Hello}

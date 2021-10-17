@@ -1,0 +1,34 @@
+int t()
+begin {a}
+	string s;
+	img coucou1,test;
+	
+	s="salut"+ -"coucou";
+	s=load(45,78);
+	load(a,b,c);
+	coucou1=load("salut");
+end {a}
+
+void test()
+begin {a}
+
+end {a}
+
+int load()
+begin {ff}
+	hjk=p;
+end {ff}
+
+
+Program coucou
+begin {salut}
+	int a,b;
+	bool i,j;
+	a=8+9;
+	b=m-6;
+	i=true&&(4>=8);
+	i=a;
+	i=(1>=1)+(5<>8);
+	a=t(5);
+	j=t();
+end {salut}

@@ -1,0 +1,165 @@
+DigitaScript: A Scripting Language for Digital Cameras 
+by Rich Robinson
+
+Listing One
+# Demo script - Display text & exit
+name "Demo script 1"
+mode 0
+menu "Demo Script"
+label "Display Exit"
+ 
+DisplayLine("Script will exit In 4 seconds")
+Wait(4000)
+exitscript
+
+
+Listing Two
+# Demo - User option choice
+declare u: uOptionChoice
+
+SetTitle( "What Now?" )
+SetOption( 1,"Shoot Pictures" )
+SetOption( 2,"Build HTML" )
+SetOption( 86,"Exit Script" )
+GetOption( uOptionChoice )
+Wait( 100 )
+if uOptionChoice == 2
+  goto BUILD_HTML
+end
+if uOptionChoice == 86
+  exitscript
+end
+# shoot pictures code continues here
+# the marker BUILD_HTML: occurs later in the script
+
+
+Listing Three
+# Demo - Guided capture with status check
+SHOOT_HALLWAY:
+
+iStatus = WaitForShutter( "Shoot Hallway" )
+if iStatus == 0
+  SetCaptureMode( still )
+  StartCapture()
+  Wait(250)
+  EndCapture()
+end
+if iStatus != 0
+    goto SHOOT_HALLWAY
+end
+
+
+Listing Four
+# fmtd = Focus Method, 2 = Center Spot
+SetCameraState ("fmtd", 2)
+# zpos = Zoom position 150 = 1.5x
+SetCameraState ( "zpos", 150 )
+# wmod = White balance, 6 = Fluorescent
+SetCameraState ("wmod", 6)
+
+# mtdy = Selftimer delay, Seconds
+
+GetCameraState ("mtdy", 2)
+# bttc = Battery Sleep Timeout, Seconds
+
+GetCameraState ( "bttc", uBST )
+DisplayLine( "Battery sleep timeout: ",uBST, " sec.")
+Wait(4000)
+
+
+Listing Five
+GetMarkedImage(0, sImagePath, nFileName)
+# ucnt - Write User Caption tag
+SetUserFileTag ( sImagePath, nFileName, "ucnt", "My Caption" )
+
+# ptid - Product ID/Name
+GetFileTag ( sImagePath, nFileName, "ptid", sParamVal)
+# date - Capture date of image
+GetFileTag ( sImagePath, nFileName, "date", bParamVal)
+# shut - Shutter speed
+GetFileTag ( sImagePath, nFileName, "shut", iParamVal)
+ucnt - User Caption tag
+GetFileTag ( sImagePath, nFileName, "ucnt", sParamVal)
+
+
+Listing Six
+# Last line in address file should be "end"
+# Data sequence tab seperated, Name,Email,Phone,CellPhone
+# Data file name "phonelst.txt" in system folder
+name "Phone Number List" 
+mode  0                  # Capture Mode
+menu "My INFO:"
+label "Phone List"
+
+declare t: tSearchText,tName,tEmail,tPhone,tCellPh
+declare s: sSearchText
+declare i: iStatus,iLocation
+declare u: uPhFileID,uOptionChoice
+
+iStatus = FileOpen( 2, "/System/phonelst.txt" ,2 ,uPhFileID )
+if iStatus != 0
+  DisplayLine( "FAILED - FileOpen Read - phonelst.txt" )
+  DisplayLine( "File is missing" )
+  Wait(4000)
+  exitscript
+end
+
+SetTitle( "Search for?" )
+GetString("Enter text, press continue:",sSearchText)
+Wait(10)
+DisplayClear()
+DisplayLine("Searching...")
+
+FIND_COUNTER:
+SetDelimiter(tab)
+ReadLine( uPhFileID,tName,tEmail,tPhone,tCellPh)
+tSearchText = tName+tEmail+tPhone+tCellPh
+FindString(tSearchText,0,sSearchText,iLocation)
+if tName == "end"
+    DisplayClear()
+    DisplayLine( "Text not found." )
+    DisplayLine( "Search is case sensitive." )
+    DisplayLine( "Script will exit." )
+    Wait(3000)
+    exitscript
+end
+
+if iLocation != -1
+    goto FOUND_NAME 
+end
+
+if iLocation == -1
+    goto FIND_COUNTER
+end
+
+FOUND_NAME:
+SetTitle(tName)
+SetOption(0,"This is it")
+SetOption(1,"Continue search")
+SetOption(86,"Exit Script")
+GetOption(uOptionChoice)
+if uOptionChoice == 1
+    Wait(10)
+    DisplayClear()
+    DisplayLine( "Searching..." )
+    goto FIND_COUNTER
+end
+if uOptionChoice == 86
+    exitscript
+end
+
+INFO_DISPLAY_LOOP:
+DisplayClear()
+DisplayLine( tName )
+DisplayLine( tEmail )
+DisplayLine( tPhone )
+DisplayLine( tCellPh )
+Wait(15000)
+Exitscript
+
+
+
+
+
+
+3

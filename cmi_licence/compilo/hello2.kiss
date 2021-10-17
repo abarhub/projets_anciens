@@ -1,0 +1,16 @@
+int t()
+begin {a}
+
+	return 4+9;
+	a=t();
+	//return true;
+end {a}
+
+Program Hello
+
+begin {Hello}
+	int a,b;
+	bool c,d;
+	
+	return;
+end {Hello}
