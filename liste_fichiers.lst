@@ -1,0 +1,756 @@
+ Le volume dans le lecteur D s'appelle Nouveau nom
+ Le num‚ro de s‚rie du volume est D026-458D
+
+ R‚pertoire de D:\projet\projets_anciens
+
+17/10/2021  13:37    <DIR>          .
+17/10/2021  13:37    <DIR>          ..
+16/10/2021  10:59    <DIR>          cmi_licence
+16/10/2021  10:57    <DIR>          Forty
+17/10/2021  13:37                 0 liste_fichiers.lst
+16/10/2021  10:50                17 README.md
+               2 fichier(s)               17 octets
+
+ R‚pertoire de D:\projet\projets_anciens\cmi_licence
+
+16/10/2021  10:59    <DIR>          .
+16/10/2021  10:59    <DIR>          ..
+16/10/2021  10:57    <DIR>          caml
+16/10/2021  10:57    <DIR>          CMI
+16/10/2021  10:56    <DIR>          compilo
+17/10/2021  10:46    <DIR>          Devoir
+16/10/2021  10:57    <DIR>          image
+16/10/2021  10:57    <DIR>          IMAGE2
+16/10/2021  10:57    <DIR>          image20
+16/10/2021  10:57    <DIR>          IMAGE4
+16/10/2021  10:57    <DIR>          IMAGE6
+16/10/2021  10:59    <DIR>          projet
+16/10/2021  10:59    <DIR>          projet2
+16/10/2021  10:46    <DIR>          Test_logique
+               0 fichier(s)                0 octets
+
+ R‚pertoire de D:\projet\projets_anciens\cmi_licence\caml
+
+16/10/2021  10:57    <DIR>          .
+16/10/2021  10:57    <DIR>          ..
+11/10/2001  13:03               759 tp1.ml
+18/10/2001  12:58             1ÿ171 tp2.ml
+25/10/2001  13:02             2ÿ965 tp3.ml
+07/11/2001  13:41             1ÿ857 tp4.ml
+               4 fichier(s)            6ÿ752 octets
+
+ R‚pertoire de D:\projet\projets_anciens\cmi_licence\CMI
+
+16/10/2021  10:57    <DIR>          .
+16/10/2021  10:57    <DIR>          ..
+17/10/2021  08:15    <DIR>          CAML
+16/10/2021  11:56    <DIR>          FORUM
+17/10/2021  08:21    <DIR>          SYSTEM
+               0 fichier(s)                0 octets
+
+ R‚pertoire de D:\projet\projets_anciens\cmi_licence\CMI\CAML
+
+17/10/2021  08:15    <DIR>          .
+17/10/2021  08:15    <DIR>          ..
+02/12/2001  21:54             2ÿ589 AFFICHE.ML
+02/12/2001  21:54                84 AFFICHE.MLI
+02/12/2001  21:54               436 ARBRE.MLI
+02/12/2001  21:54            32ÿ245 CALMB.ZIP
+02/12/2001  21:54             1ÿ092 DERIV.ML
+02/12/2001  21:54                85 DERIV.MLI
+02/12/2001  21:54               157 EXCEP.MLI
+02/12/2001  21:54            11ÿ146 LEXER.ML
+02/12/2001  21:54             1ÿ262 LEXER.MLL
+02/12/2001  21:54               597 LOADALL.ML
+02/12/2001  21:54             2ÿ986 MAIN.ML
+02/12/2001  21:54               415 MAKEFILE
+02/12/2001  21:54             6ÿ248 PARSER.ML
+02/12/2001  21:54               308 PARSER.MLI
+02/12/2001  21:54             1ÿ041 PARSER.MLY
+02/12/2001  21:54             1ÿ340 RAPPORT.TXT
+02/12/2001  21:54            12ÿ174 SIMPL.ML
+02/12/2001  21:54                98 SIMPL.MLI
+02/12/2001  21:54               616 TEST1.TXT
+02/12/2001  21:54               100 TEST2.TXT
+              20 fichier(s)           75ÿ019 octets
+
+ R‚pertoire de D:\projet\projets_anciens\cmi_licence\CMI\FORUM
+
+16/10/2021  11:56    <DIR>          .
+16/10/2021  11:56    <DIR>          ..
+02/12/2001  21:53             3ÿ006 MAIN.C
+02/12/2001  21:53             5ÿ490 SERVEUR.C
+               2 fichier(s)            8ÿ496 octets
+
+ R‚pertoire de D:\projet\projets_anciens\cmi_licence\CMI\SYSTEM
+
+17/10/2021  08:21    <DIR>          .
+17/10/2021  08:21    <DIR>          ..
+02/12/2001  21:53             1ÿ729 23.C
+02/12/2001  21:53             1ÿ485 230.C
+02/12/2001  21:53               839 622.C
+02/12/2001  21:53                75 EXO1.C
+02/12/2001  21:53               146 EXO10.C
+02/12/2001  21:53             1ÿ551 EXO12.C
+02/12/2001  21:53             1ÿ298 EXO2.C
+02/12/2001  21:53             1ÿ312 EXO21.C
+02/12/2001  21:53             2ÿ518 EXO22.C
+02/12/2001  21:53             1ÿ518 EXO3.C
+02/12/2001  21:53             2ÿ135 EXO32.C
+02/12/2001  21:53               489 EXO41.C
+02/12/2001  21:53               349 EXO412.C
+02/12/2001  21:53               482 EXO413.C
+02/12/2001  21:53               794 EXO421.C
+02/12/2001  21:53             1ÿ587 EXO422.C
+02/12/2001  21:53             1ÿ006 EXO423.C
+02/12/2001  21:53               868 EXO43.C
+02/12/2001  21:53               293 EXO5.C
+02/12/2001  21:53               261 EXO52.C
+02/12/2001  21:53               944 EXO61.C
+02/12/2001  21:53               944 EXO610.C
+02/12/2001  21:53             1ÿ344 EXO62.C
+02/12/2001  21:53             1ÿ008 EXO63.C
+02/12/2001  21:53             1ÿ955 EXO7.C
+02/12/2001  21:53             1ÿ402 MAKEFILE
+02/12/2001  21:53             1ÿ743 TEST.C
+02/12/2001  21:53               452 TP2EXO1.C
+02/12/2001  21:53               809 TP2EXO13.C
+02/12/2001  21:53             1ÿ005 TP2EXO22.C
+02/12/2001  21:53             1ÿ648 TP2EXO23.C
+02/12/2001  21:53               882 TP2EXO31.C
+02/12/2001  21:53             3ÿ487 TP2EXO32.C
+02/12/2001  21:53             1ÿ840 TP2EXO41.C
+02/12/2001  21:53             2ÿ253 TP2EXO42.C
+02/12/2001  21:53               916 TP3EXO1.C
+02/12/2001  21:53             1ÿ333 TP3EXO2.C
+              37 fichier(s)           44ÿ700 octets
+
+ R‚pertoire de D:\projet\projets_anciens\cmi_licence\compilo
+
+16/10/2021  10:56    <DIR>          .
+16/10/2021  10:56    <DIR>          ..
+13/05/2001  16:15             8ÿ108 affich_rec.c
+21/04/2001  00:06               186 affich_rec.h
+13/05/2001  17:37            19ÿ270 arbast.c
+13/05/2001  17:37             1ÿ814 arbast.h
+02/05/2001  11:29             1ÿ399 debugage.h
+29/11/2000  17:23             3ÿ604 dscript.txt
+02/05/2001  13:40               787 erreur.c
+21/04/2001  00:08               241 erreur.h
+16/10/2021  10:56    <DIR>          gc
+13/05/2001  13:16             9ÿ171 gc.c
+13/05/2001  13:16               873 gc.h
+13/05/2001  11:55               680 gcbase.h
+13/05/2001  19:38               120 hello.kiss
+13/05/2001  19:38               137 hello2.kiss
+29/11/2000  17:49             2ÿ382 index.htm
+19/04/2001  11:30                94 lexer.h
+13/05/2001  19:32             3ÿ880 lexer.lex
+12/05/2001  17:52             2ÿ249 main.c
+13/05/2001  15:42             1ÿ469 makefile
+13/05/2001  19:44             1ÿ603 makefile.bcc
+13/05/2001  15:31             1ÿ724 makefile.dj
+13/05/2001  19:35           100ÿ864 parse.exe
+13/05/2001  19:34            16ÿ923 parse.y
+13/05/2001  19:39               589 test1.kiss
+13/05/2001  19:39                45 test10.kiss
+13/05/2001  19:40               138 test11.kiss
+13/05/2001  19:40               724 test12.kiss
+13/05/2001  19:40               344 test13.kiss
+13/05/2001  19:40               219 test14.kiss
+13/05/2001  19:29               228 test15.kiss
+13/05/2001  19:41               119 test2.kiss
+13/05/2001  19:41               638 test3.kiss
+13/05/2001  19:41             1ÿ284 test4.kiss
+13/05/2001  19:41               136 test5.kiss
+13/05/2001  19:28               147 test6.kiss
+13/05/2001  19:40               146 test7.kiss
+13/05/2001  19:28               236 test8.kiss
+13/05/2001  19:40             1ÿ288 test9.kiss
+09/04/2001  12:45               139 traduit
+13/05/2001  17:28             2ÿ196 type.h
+13/05/2001  19:13            26ÿ646 verif.c
+25/04/2001  17:03               209 verif.h
+              41 fichier(s)          213ÿ049 octets
+
+ R‚pertoire de D:\projet\projets_anciens\cmi_licence\compilo\gc
+
+16/10/2021  10:56    <DIR>          .
+16/10/2021  10:56    <DIR>          ..
+02/05/2001  11:29             1ÿ399 debugage.h
+13/05/2001  13:16             9ÿ171 gc.c
+13/05/2001  14:52               869 gc.h
+13/05/2001  11:55               680 gcbase.h
+13/05/2001  15:10               207 makefile
+08/05/2001  17:16             9ÿ404 test.c
+09/04/2001  12:45               139 traduit
+               7 fichier(s)           21ÿ869 octets
+
+ R‚pertoire de D:\projet\projets_anciens\cmi_licence\Devoir
+
+17/10/2021  10:46    <DIR>          .
+17/10/2021  10:46    <DIR>          ..
+16/10/2021  10:56    <DIR>          SYS1_2
+16/10/2021  10:56    <DIR>          System
+18/01/2001  19:00            13ÿ280 Tri.c
+               1 fichier(s)           13ÿ280 octets
+
+ R‚pertoire de D:\projet\projets_anciens\cmi_licence\Devoir\SYS1_2
+
+16/10/2021  10:56    <DIR>          .
+16/10/2021  10:56    <DIR>          ..
+09/01/2001  18:21               142 ANNUAIRE.DAT
+09/01/2001  16:30            15ÿ400 EXO1.C
+09/01/2001  14:20            15ÿ395 EXO1.C.bak
+09/01/2001  11:16            77ÿ312 EXO1.exe
+09/01/2001  11:16            16ÿ902 EXO1.obj
+09/01/2001  11:16           393ÿ216 EXO1.tds
+09/01/2001  14:20             1ÿ632 EXO2
+09/01/2001  11:54             1ÿ571 EXO2.bak
+09/01/2001  14:20             3ÿ785 EXO3.C
+06/01/2001  19:32               149 FICHE1.DAT
+09/01/2001  14:20                75 Makefile
+09/01/2001  18:22             7ÿ561 resusys.zip
+06/01/2001  19:32                33 TAUX.DAT
+              13 fichier(s)          533ÿ173 octets
+
+ R‚pertoire de D:\projet\projets_anciens\cmi_licence\Devoir\System
+
+16/10/2021  10:56    <DIR>          .
+16/10/2021  10:56    <DIR>          ..
+29/11/2000  15:18             6ÿ847 devoir1.c
+29/11/2000  15:18            19ÿ336 devoir2.c
+29/11/2000  15:20               188 macro.txt
+29/11/2000  15:18               646 macro_1.txt
+29/11/2000  15:20               168 tata.txt
+29/11/2000  15:18               105 test.txt
+29/11/2000  15:18               159 test1
+29/11/2000  15:18                12 testvide.txt
+29/11/2000  15:20                71 toto.txt
+29/11/2000  15:18               198 toto1.txt
+29/11/2000  15:18                44 toto_1.txt
+29/11/2000  15:20                 0 vide.txt
+              12 fichier(s)           27ÿ774 octets
+
+ R‚pertoire de D:\projet\projets_anciens\cmi_licence\image
+
+16/10/2021  10:57    <DIR>          .
+16/10/2021  10:57    <DIR>          ..
+16/10/2021  10:57    <DIR>          lib
+16/10/2021  10:57    <DIR>          projet
+16/10/2021  10:57    <DIR>          tp1
+16/10/2021  10:57    <DIR>          tp3d
+               0 fichier(s)                0 octets
+
+ R‚pertoire de D:\projet\projets_anciens\cmi_licence\image\lib
+
+16/10/2021  10:57    <DIR>          .
+16/10/2021  10:57    <DIR>          ..
+23/02/2001  11:33            25ÿ166 lgx.c
+23/02/2001  11:33               688 lgx.h
+               2 fichier(s)           25ÿ854 octets
+
+ R‚pertoire de D:\projet\projets_anciens\cmi_licence\image\projet
+
+16/10/2021  10:57    <DIR>          .
+16/10/2021  10:57    <DIR>          ..
+10/04/2001  10:23               829 2d.h
+10/04/2001  10:23             1ÿ214 3d.h
+04/05/2001  12:42            73ÿ728 cube
+04/05/2001  12:21             6ÿ116 cube.c
+10/04/2001  10:23             1ÿ658 cube.c~
+04/05/2001  12:37            24ÿ216 cube.o
+10/04/2001  10:58               689 cube.txt
+10/04/2001  10:57               575 cube.txt~
+10/04/2001  10:57               769 cube2.txt
+10/04/2001  10:23               620 cube2.txt~
+10/04/2001  10:23               240 makefile1
+10/04/2001  10:23             2ÿ879 outils2d.c
+10/04/2001  10:51            13ÿ584 outils2d.o
+04/05/2001  12:41             9ÿ120 outils3d.c
+10/04/2001  10:23                31 pt_control.txt
+16/10/2021  10:57    <DIR>          Test
+              15 fichier(s)          136ÿ268 octets
+
+ R‚pertoire de D:\projet\projets_anciens\cmi_licence\image\projet\Test
+
+16/10/2021  10:57    <DIR>          .
+16/10/2021  10:57    <DIR>          ..
+04/05/2001  12:11           162ÿ479 avion
+04/05/2001  12:11            37ÿ930 canard
+04/05/2001  12:11           197ÿ368 crane
+04/05/2001  12:11               372 cube
+04/05/2001  12:11           559ÿ018 voiture
+               5 fichier(s)          957ÿ167 octets
+
+ R‚pertoire de D:\projet\projets_anciens\cmi_licence\image\tp1
+
+16/10/2021  10:57    <DIR>          .
+16/10/2021  10:57    <DIR>          ..
+13/03/2001  10:28               828 2d.h
+13/03/2001  10:28               775 2D0.h
+20/03/2001  09:36           507ÿ904 core
+13/03/2001  11:18            57ÿ344 courbe
+13/02/2001  11:29             2ÿ168 courbe.c
+13/03/2001  11:29            57ÿ344 courbe2
+13/03/2001  11:29             3ÿ817 courbe2.c
+06/03/2001  11:09            57ÿ344 courbe4
+06/03/2001  11:09             3ÿ504 courbe4.c
+20/03/2001  09:52            57ÿ344 courbe5
+20/03/2001  10:01             3ÿ859 courbe5.c
+13/03/2001  11:39             3ÿ528 courbe5.c~
+22/03/2001  13:39            57ÿ344 courbe50
+22/03/2001  13:39             5ÿ772 courbe50.c
+22/03/2001  13:39            12ÿ904 courbe50.o
+06/02/2001  11:16               164 Makefile
+20/02/2001  10:28               170 makefile2
+06/03/2001  10:10               171 makefile4
+13/03/2001  10:27               171 Makefile5
+22/03/2001  13:12               178 Makefile50
+13/03/2001  11:12             2ÿ879 outils2d.c
+22/03/2001  13:32            10ÿ568 outils2d.o
+20/02/2001  11:26                41 pt_controle
+              23 fichier(s)          846ÿ121 octets
+
+ R‚pertoire de D:\projet\projets_anciens\cmi_licence\image\tp3d
+
+16/10/2021  10:57    <DIR>          .
+16/10/2021  10:57    <DIR>          ..
+03/04/2001  10:53               829 2d.h
+20/03/2001  10:52               794 2d.h~
+04/04/2001  15:06             1ÿ214 3d.h
+27/03/2001  09:59               939 3d.h~
+10/04/2001  10:20            65ÿ536 cube
+10/04/2001  10:20             1ÿ753 cube.c
+03/04/2001  11:21             1ÿ643 cube.c~
+10/04/2001  10:20             9ÿ552 cube.o
+20/03/2001  11:33               666 cube.txt
+20/03/2001  10:07                26 cube.txt~
+10/04/2001  10:01               769 cube2.txt
+03/04/2001  11:04               621 cube2.txt~
+03/04/2001  10:52            25ÿ166 lgx.c
+03/04/2001  10:52               688 lgx.h
+10/04/2001  09:43               240 makefile1
+21/03/2001  14:54               228 makefile1~
+20/03/2001  10:52             2ÿ879 outils2d.c
+10/04/2001  10:20            13ÿ584 outils2d.o
+10/04/2001  10:17             9ÿ064 outils3d.c
+04/04/2001  15:07             8ÿ591 outils3d.c~
+03/04/2001  11:20                31 pt_control.txt
+              21 fichier(s)          144ÿ813 octets
+
+ R‚pertoire de D:\projet\projets_anciens\cmi_licence\IMAGE2
+
+16/10/2021  10:57    <DIR>          .
+16/10/2021  10:57    <DIR>          ..
+06/06/2001  20:42               831 2D.H
+30/05/2001  17:16             1ÿ661 3D.H
+07/06/2001  22:48            18ÿ866 CUBE.C
+06/06/2001  17:12               791 CUBE2.TXT
+06/06/2001  20:52             3ÿ164 OUTILS2D.C
+08/06/2001  17:15            41ÿ562 OUTILS3D.C
+07/06/2001  22:59            39ÿ391 OUTILS3D.C.old
+30/05/2001  16:59               195 pt_control
+07/06/2001  18:10               300 TEST1.TXT
+               9 fichier(s)          106ÿ761 octets
+
+ R‚pertoire de D:\projet\projets_anciens\cmi_licence\image20
+
+16/10/2021  10:57    <DIR>          .
+16/10/2021  10:57    <DIR>          ..
+20/05/2001  15:56               827 2d.h
+20/05/2001  15:56             1ÿ662 3d.h
+20/05/2001  15:56             6ÿ864 cube.c
+20/05/2001  15:56               773 cube2.c
+20/05/2001  15:56            25ÿ359 lgx.c
+20/05/2001  15:57               529 makefileL
+20/05/2001  15:57             3ÿ251 outils2d.c
+20/05/2001  15:57            14ÿ718 outils3d.c
+16/10/2021  10:57    <DIR>          TMP
+20/05/2001  15:59           480ÿ298 tr490.ps
+               9 fichier(s)          534ÿ281 octets
+
+ R‚pertoire de D:\projet\projets_anciens\cmi_licence\image20\TMP
+
+16/10/2021  10:57    <DIR>          .
+16/10/2021  10:57    <DIR>          ..
+24/05/2001  20:14             1ÿ526 3D.H
+24/05/2001  20:15            13ÿ221 CUBE.C
+24/05/2001  20:13            22ÿ359 OUTILS3D.C
+23/05/2001  16:42               139 TRADUIT
+               4 fichier(s)           37ÿ245 octets
+
+ R‚pertoire de D:\projet\projets_anciens\cmi_licence\IMAGE4
+
+16/10/2021  10:57    <DIR>          .
+16/10/2021  10:57    <DIR>          ..
+06/06/2001  20:42               831 2D.H
+30/05/2001  17:16             1ÿ661 3D.H
+07/06/2001  22:48            18ÿ866 CUBE.C
+06/06/2001  17:12               791 CUBE2.TXT
+11/06/2001  20:43               691 Nouveau Document texte.txt
+06/06/2001  20:52             3ÿ164 OUTILS2D.C
+11/06/2001  20:14            49ÿ201 OUTILS3D.C
+07/06/2001  18:10               300 TEST1.TXT
+               8 fichier(s)           75ÿ505 octets
+
+ R‚pertoire de D:\projet\projets_anciens\cmi_licence\IMAGE6
+
+16/10/2021  10:57    <DIR>          .
+16/10/2021  10:57    <DIR>          ..
+06/06/2001  20:42               831 2D.H
+12/06/2001  20:07             1ÿ477 3D.H
+12/06/2001  20:08            26ÿ056 CUBE.C
+06/06/2001  17:12               791 CUBE2.TXT
+12/06/2001  20:11               517 DEBUG.H
+23/05/2001  16:49            24ÿ357 LGX.C
+23/05/2001  16:44               688 LGX.H
+12/06/2001  12:40               384 makefileL
+06/06/2001  20:52             3ÿ164 OUTILS2D.C
+12/06/2001  20:23            15ÿ113 OUTILS3D.C
+12/06/2001  20:06            21ÿ988 PEINTRE.C
+13/06/2001  13:17             3ÿ210 RAPPORT.TXT
+12/06/2001  16:19            66ÿ517 SPHERE.PNG
+07/06/2001  18:10               300 TEST1.TXT
+23/05/2001  16:42               139 TRADUIT
+              15 fichier(s)          165ÿ532 octets
+
+ R‚pertoire de D:\projet\projets_anciens\cmi_licence\projet
+
+16/10/2021  10:59    <DIR>          .
+16/10/2021  10:59    <DIR>          ..
+18/06/2001  16:16               947 2d.h
+18/06/2001  16:18             1ÿ956 3d.h
+18/06/2001  11:57           171ÿ503 avion
+16/10/2021  10:59    <DIR>          caml
+18/06/2001  11:57            40ÿ071 canard
+18/06/2001  11:57           207ÿ787 crane
+18/06/2001  16:15            21ÿ837 cube.c
+18/06/2001  12:02               791 cube2.txt
+18/06/2001  11:57               541 debug.h
+16/10/2021  10:59    <DIR>          forum
+18/06/2001  11:57             1ÿ609 Geole.c
+18/06/2001  11:57            25ÿ171 lgx.c
+18/06/2001  11:57               688 lgx.h
+18/06/2001  16:26             1ÿ120 makefile
+18/06/2001  15:53             3ÿ477 outils2d.c
+18/06/2001  16:10            16ÿ026 outils3d.c
+18/06/2001  16:11             7ÿ813 outils_zbuff.c
+18/06/2001  16:03            22ÿ553 peintre.c
+18/06/2001  16:46             5ÿ110 rapport.txt
+18/06/2001  11:57               322 test1.txt
+18/06/2001  11:57           583ÿ530 voiture
+18/06/2001  15:57             5ÿ394 zbuffer.c
+              20 fichier(s)        1ÿ118ÿ246 octets
+
+ R‚pertoire de D:\projet\projets_anciens\cmi_licence\projet\caml
+
+16/10/2021  10:59    <DIR>          .
+16/10/2021  10:59    <DIR>          ..
+29/11/2001  11:37             1ÿ329 #main.ml#
+22/11/2001  11:44             2ÿ583 affiche.ml
+19/11/2001  11:20                84 affiche.mli
+29/11/2001  14:27             1ÿ088 affiche.zi
+29/11/2001  14:27            10ÿ268 affiche.zo
+15/11/2001  12:57               374 arbre.mli
+29/11/2001  14:27             5ÿ544 arbre.zi
+06/11/2001  09:39            32ÿ245 calmb.zip
+19/11/2001  11:18               973 deriv.ml
+19/11/2001  11:19                85 deriv.mli
+15/11/2001  12:07                34 deriv.mli~
+15/11/2001  12:03                84 deriv.ml~
+29/11/2001  14:27             1ÿ080 deriv.zi
+29/11/2001  14:27             2ÿ358 deriv.zo
+29/11/2001  13:30               127 excep.mli
+29/11/2001  14:27             2ÿ032 excep.zi
+29/11/2001  14:27             9ÿ619 lexer.ml
+15/11/2001  12:35               673 lexer.mll
+15/11/2001  11:43               737 lexer.mll~
+29/11/2001  14:27            14ÿ784 lexer.zi
+29/11/2001  14:27            17ÿ304 lexer.zo
+03/11/2001  13:02                 7 loadall.ml
+29/11/2001  14:27            16ÿ462 main.exe
+29/11/2001  14:27             1ÿ871 main.ml
+15/11/2001  11:44             2ÿ993 main.ml~
+29/11/2001  14:27             3ÿ352 main.zi
+29/11/2001  14:27             7ÿ816 main.zo
+15/11/2001  16:18               415 makefile
+15/11/2001  14:55               415 makefile~
+29/11/2001  14:27             5ÿ695 parser.ml
+29/11/2001  14:27               268 parser.mli
+29/11/2001  14:23               869 parser.mly
+15/11/2001  11:44               687 parser.mly~
+29/11/2001  14:27             5ÿ304 parser.zi
+29/11/2001  14:27             8ÿ067 parser.zo
+29/11/2001  14:10             7ÿ502 simpl.ml
+19/11/2001  11:19                98 simpl.mli
+22/11/2001  13:25             3ÿ689 simpl.ml~
+29/11/2001  14:27               992 simpl.zi
+29/11/2001  14:27            14ÿ536 simpl.zo
+29/11/2001  14:11               135 test1.txt
+15/11/2001  11:45                 8 test1.txt~
+              42 fichier(s)          184ÿ586 octets
+
+ R‚pertoire de D:\projet\projets_anciens\cmi_licence\projet\forum
+
+16/10/2021  10:59    <DIR>          .
+16/10/2021  10:59    <DIR>          ..
+27/11/2001  12:07           404ÿ456 core
+27/11/2001  12:39            14ÿ664 main
+27/11/2001  12:42             3ÿ006 main.c
+27/11/2001  12:40             5ÿ470 serveur.c
+               4 fichier(s)          427ÿ596 octets
+
+ R‚pertoire de D:\projet\projets_anciens\cmi_licence\projet2
+
+16/10/2021  10:59    <DIR>          .
+16/10/2021  10:59    <DIR>          ..
+16/10/2021  10:59    <DIR>          AUBANEL
+16/10/2021  10:59    <DIR>          image
+               0 fichier(s)                0 octets
+
+ R‚pertoire de D:\projet\projets_anciens\cmi_licence\projet2\AUBANEL
+
+16/10/2021  10:59    <DIR>          .
+16/10/2021  10:59    <DIR>          ..
+01/05/2001  19:54             8ÿ403 affich_rec.c
+21/04/2001  00:06               196 affich_rec.h
+02/05/2001  13:45            20ÿ012 ARBAST.C
+02/05/2001  11:42            18ÿ747 ARBAST.C~
+01/05/2001  12:14             1ÿ854 ARBAST.H
+25/04/2001  15:12               137 COMP.BAT
+28/04/2001  17:16             1ÿ458 DEBUGAGE.H
+02/05/2001  13:40               830 ERREUR.C
+30/04/2001  16:09               778 ERREUR.C~
+21/04/2001  00:08               252 ERREUR.H
+16/10/2021  10:59    <DIR>          GC
+08/05/2001  17:20             8ÿ897 GC.C
+01/05/2001  19:51             8ÿ085 GC.C~
+08/05/2001  11:30               554 GC.H
+02/05/2001  13:39             9ÿ003 GC2.C
+01/05/2001  18:53               799 GC2.H
+08/05/2001  11:33               314 gcbase.h
+18/04/2001  20:21               131 hello.kiss
+23/04/2001  20:11               152 hello2.kiss
+02/05/2001  13:47            48ÿ195 lex.yy.c
+19/04/2001  11:30               102 LEXER.H
+01/05/2001  17:34             3ÿ876 LEXER.LEX
+02/05/2001  13:36             2ÿ309 MAIN.C
+01/05/2001  12:25             2ÿ473 MAIN.C~
+08/05/2001  17:25             1ÿ575 MAKEFILE
+08/05/2001  17:25             1ÿ575 MAKEFILE.bak
+01/05/2001  18:57             1ÿ029 MAKEFILE.GCC
+02/05/2001  11:47             1ÿ533 MAKEFILE.OLD
+02/05/2001  13:47            66ÿ525 PARSE
+02/05/2001  13:47            17ÿ172 parse.tab.o
+02/05/2001  13:47            16ÿ911 PARSE.Y
+01/05/2001  20:01            16ÿ852 PARSE.Y~
+19/04/2001  11:12             1ÿ066 TATA.TXT
+14/04/2001  12:24               614 test1.kiss
+14/04/2001  12:25                48 test10.kiss
+14/04/2001  12:26               151 test11.kiss
+14/04/2001  12:26               763 test12.kiss
+19/04/2001  11:26               377 test13.kiss
+24/04/2001  16:43               240 test14.kiss
+14/04/2001  12:24               127 test2.kiss
+14/04/2001  12:24               670 test3.kiss
+14/04/2001  12:25             1ÿ355 test4.kiss
+25/04/2001  16:24               149 test5.kiss
+14/04/2001  12:25               162 test6.kiss
+14/04/2001  12:25               161 test7.kiss
+14/04/2001  12:25               274 test8.kiss
+14/04/2001  12:25             1ÿ359 test9.kiss
+02/05/2001  11:48             1ÿ533 TMP.TMP
+02/05/2001  11:41            14ÿ782 TOTO.TXT
+09/04/2001  12:45               139 TRADUIT
+01/05/2001  17:16             2ÿ226 TYPE.H
+02/05/2001  13:35            26ÿ768 VERIF.C
+01/05/2001  20:10            25ÿ555 VERIF.C~
+25/04/2001  17:03               221 VERIF.H
+02/05/2001  13:46            16ÿ584 VERIF.O
+              54 fichier(s)          356ÿ053 octets
+
+ R‚pertoire de D:\projet\projets_anciens\cmi_licence\projet2\AUBANEL\GC
+
+16/10/2021  10:59    <DIR>          .
+16/10/2021  10:59    <DIR>          ..
+11/05/2001  11:50            49ÿ152 a.out
+11/05/2001  11:50           360ÿ448 core
+               2 fichier(s)          409ÿ600 octets
+
+ R‚pertoire de D:\projet\projets_anciens\cmi_licence\projet2\image
+
+16/10/2021  10:59    <DIR>          .
+16/10/2021  10:59    <DIR>          ..
+16/10/2021  10:59    <DIR>          lib
+16/10/2021  10:59    <DIR>          projet
+16/10/2021  10:59    <DIR>          projet2
+16/10/2021  10:59    <DIR>          projet3
+               0 fichier(s)                0 octets
+
+ R‚pertoire de D:\projet\projets_anciens\cmi_licence\projet2\image\lib
+
+16/10/2021  10:59    <DIR>          .
+16/10/2021  10:59    <DIR>          ..
+23/02/2001  11:33            25ÿ166 lgx.c
+23/02/2001  11:33               688 lgx.h
+               2 fichier(s)           25ÿ854 octets
+
+ R‚pertoire de D:\projet\projets_anciens\cmi_licence\projet2\image\projet
+
+16/10/2021  10:59    <DIR>          .
+16/10/2021  10:59    <DIR>          ..
+11/05/2001  14:34               866 2d.h
+11/05/2001  14:34             1ÿ535 3d.h
+11/05/2001  16:15            55ÿ916 cube
+11/05/2001  14:34             7ÿ021 cube.c
+11/05/2001  14:34               631 cube2.txt
+11/05/2001  16:13            25ÿ192 lgx.c
+11/05/2001  14:34            24ÿ357 lgx.c~
+11/05/2001  14:37               688 lgx.h
+11/05/2001  14:34               340 makefileL
+11/05/2001  14:34             3ÿ267 outils2d.c
+11/05/2001  14:34            15ÿ261 outils3d.c
+              11 fichier(s)          135ÿ074 octets
+
+ R‚pertoire de D:\projet\projets_anciens\cmi_licence\projet2\image\projet2
+
+16/10/2021  10:59    <DIR>          .
+16/10/2021  10:59    <DIR>          ..
+10/04/2001  10:23               829 2d.h
+10/04/2001  10:23             1ÿ214 3d.h
+09/05/2001  12:49            73ÿ728 core
+09/05/2001  14:00            73ÿ728 cube
+09/05/2001  13:58             7ÿ115 cube.c
+04/05/2001  12:21             5ÿ817 cube.c~
+09/05/2001  14:00            26ÿ744 cube.o
+10/04/2001  10:58               689 cube.txt
+10/04/2001  10:57               575 cube.txt~
+09/05/2001  13:27               791 cube2.txt
+10/04/2001  10:57               620 cube2.txt~
+10/04/2001  10:23               240 makefile1
+10/04/2001  10:23             2ÿ879 outils2d.c
+09/05/2001  14:00            13ÿ584 outils2d.o
+09/05/2001  14:00             9ÿ846 outils3d.c
+04/05/2001  12:41             8ÿ666 outils3d.c~
+10/04/2001  10:23                31 pt_control.txt
+16/10/2021  10:59    <DIR>          Test
+              17 fichier(s)          227ÿ096 octets
+
+ R‚pertoire de D:\projet\projets_anciens\cmi_licence\projet2\image\projet2\Test
+
+16/10/2021  10:59    <DIR>          .
+16/10/2021  10:59    <DIR>          ..
+04/05/2001  12:11           162ÿ479 avion
+04/05/2001  12:11            37ÿ930 canard
+04/05/2001  12:11           197ÿ368 crane
+04/05/2001  12:11               372 cube
+04/05/2001  12:11           559ÿ018 voiture
+               5 fichier(s)          957ÿ167 octets
+
+ R‚pertoire de D:\projet\projets_anciens\cmi_licence\projet2\image\projet3
+
+16/10/2021  10:59    <DIR>          .
+16/10/2021  10:59    <DIR>          ..
+16/10/2021  10:59    <DIR>          Test
+               0 fichier(s)                0 octets
+
+ R‚pertoire de D:\projet\projets_anciens\cmi_licence\projet2\image\projet3\Test
+
+16/10/2021  10:59    <DIR>          .
+16/10/2021  10:59    <DIR>          ..
+10/05/2001  09:51               829 2d.h
+10/05/2001  09:51             1ÿ214 3d.h
+10/05/2001  09:52           162ÿ479 avion
+10/05/2001  09:52            37ÿ930 canard
+10/05/2001  09:51            73ÿ728 core
+10/05/2001  09:52           197ÿ368 crane
+10/05/2001  09:52               372 cube
+10/05/2001  09:51             7ÿ115 cube.c
+10/05/2001  09:51             5ÿ817 cube.c~
+10/05/2001  09:51            26ÿ744 cube.o
+10/05/2001  09:51               689 cube.txt
+10/05/2001  09:51               575 cube.txt~
+10/05/2001  09:51               791 cube2.txt
+10/05/2001  09:51               620 cube2.txt~
+              14 fichier(s)          516ÿ271 octets
+
+ R‚pertoire de D:\projet\projets_anciens\cmi_licence\Test_logique
+
+16/10/2021  10:46    <DIR>          .
+16/10/2021  10:46    <DIR>          ..
+05/05/2001  16:14             1ÿ635 debugage.h
+06/05/2001  12:04            25ÿ419 demonstrateur.c
+06/05/2001  10:56            80ÿ896 demonstrateur.exe
+17/03/2001  10:38           264ÿ860 Erdos_Szekeres10
+17/03/2001  10:38           192ÿ247 Erdos_Szekeres9
+17/03/2001  10:41            60ÿ453 Ramsey_3c_16pts
+06/05/2001  13:07             5ÿ208 rapport.txt
+05/05/2001  11:19             6ÿ972 resultat.txt
+17/03/2001  10:40           267ÿ784 Turan_5pts_6r
+17/03/2001  10:40           428ÿ825 Turan_5pts_7r
+              10 fichier(s)        1ÿ334ÿ299 octets
+
+ R‚pertoire de D:\projet\projets_anciens\Forty
+
+16/10/2021  10:57    <DIR>          .
+16/10/2021  10:57    <DIR>          ..
+08/01/2000  16:27             5ÿ518 canvas.cpp
+08/01/2000  16:27             1ÿ556 canvas.h
+28/08/2000  09:42           119ÿ605 canvas.obj
+08/01/2000  16:27            11ÿ102 card.cpp
+08/01/2000  16:27             2ÿ243 card.h
+28/08/2000  09:42            42ÿ708 card.obj
+08/01/2000  16:27               766 cards.ico
+13/01/2001  11:02    <DIR>          Debug
+19/03/2000  20:55             6ÿ451 forty.cpp
+08/01/2000  16:27               222 forty.def
+28/08/2000  09:43         1ÿ568ÿ768 forty.exe
+08/01/2000  16:27               948 forty.h
+28/08/2000  09:41            99ÿ242 forty.obj
+08/01/2000  16:27               133 forty.rc
+28/08/2000  09:42            18ÿ148 forty.RES
+13/01/2001  11:02               272 FortyVC.bpf
+13/01/2001  11:02             3ÿ457 FortyVC.bpr
+18/03/2000  17:15            11ÿ593 FortyVC.dsp
+18/03/2000  17:15               537 FortyVC.dsw
+14/01/2000  13:45            22ÿ418 game.cpp
+08/01/2000  16:27             3ÿ919 game.h
+28/08/2000  09:42            71ÿ298 game.obj
+08/01/2000  16:27               318 makefile.b32
+08/01/2000  16:27               398 makefile.bcc
+08/01/2000  16:27               387 makefile.dos
+08/01/2000  16:27               348 makefile.g95
+08/01/2000  16:27               765 makefile.unx
+08/01/2000  16:27               438 makefile.vc
+08/01/2000  16:27               261 makefile.wat
+08/01/2000  16:27             2ÿ818 pictures.bmp
+08/01/2000  16:27             5ÿ850 pictures.xpm
+08/01/2000  16:27             7ÿ672 pile.cpp
+08/01/2000  16:27             3ÿ446 pile.h
+28/08/2000  09:42            22ÿ021 pile.obj
+19/03/2000  20:55             4ÿ905 playerdg.cpp
+08/01/2000  16:27             1ÿ237 playerdg.h
+28/08/2000  09:42           128ÿ677 playerdg.obj
+08/01/2000  16:27             4ÿ420 readme.txt
+08/01/2000  16:27             4ÿ176 scoredg.cpp
+08/01/2000  16:27               928 scoredg.h
+28/08/2000  09:42           130ÿ024 scoredg.obj
+16/02/2000  12:53             4ÿ419 scorefil.cpp
+16/02/2000  12:53             1ÿ243 scorefil.h
+28/08/2000  09:42            34ÿ787 scorefil.obj
+08/01/2000  16:27               662 symbols.bmp
+08/01/2000  16:27             2ÿ688 symbols.xbm
+08/01/2000  16:27             4ÿ344 symbols.xpm
+13/01/2001  11:02             1ÿ340 vctobpr.log
+              47 fichier(s)        2ÿ359ÿ476 octets
+
+ R‚pertoire de D:\projet\projets_anciens\Forty\Debug
+
+13/01/2001  11:02    <DIR>          .
+13/01/2001  11:02    <DIR>          ..
+               0 fichier(s)                0 octets
+
+     Total des fichiers list‚sÿ:
+             925 fichier(s)       14ÿ874ÿ965 octets
+             791 R‚p(s)  1ÿ254ÿ265ÿ253ÿ888 octets libres
